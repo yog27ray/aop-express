@@ -20,14 +20,11 @@ function handleErrorResponse(response: Response, error: Error & { code?: number 
 export function createMiddlewareHandler(ClassMiddlewares: Array<new () => AOPMiddleware>): Array<RequestHandler> {
   return ClassMiddlewares.map((ClassMiddleware) => {
     const controllerClassMiddleware = middlewareContainer.get<AOPMiddleware>(ClassMiddleware);
-    return async (request: MiddlewareRequest, response: Response, next: NextFunction): Promise<void> => {
-      try {
-        addMiddlewareData(request);
-        await controllerClassMiddleware.requestHandler(request);
-        next();
-      } catch (error) {
-        handleErrorResponse(response, error);
-      }
+    return (request: MiddlewareRequest, response: Response, next: NextFunction): void => {
+      addMiddlewareData(request);
+      controllerClassMiddleware.requestHandler(request)
+        .then(next)
+        .catch((error) => handleErrorResponse(response, error));
     };
   });
 }
@@ -54,20 +51,17 @@ function createRequestHandler(
     middlewareClass: routeConfig?.middleware || [],
   });
   Object.assign(target, {
-    async [handlerMethod](request: MiddlewareRequest, response: Response): Promise<void> {
-      try {
-        addMiddlewareData(request);
-        const result = await this[classMethod]({
-          middlewareData: request.middlewareData,
-          query: request.query,
-          params: request.params,
-          headers: request.headers,
-          body: request.body,
-        });
-        response.status(result.code || 200).json(result.response);
-      } catch (error) {
-        handleErrorResponse(response, error);
-      }
+    [handlerMethod](request: MiddlewareRequest, response: Response): void {
+      addMiddlewareData(request);
+      this[classMethod]({
+        middlewareData: request.middlewareData,
+        query: request.query,
+        params: request.params,
+        headers: request.headers,
+        body: request.body,
+      })
+        .then((result) => response.status(result.code || 200).json(result.response))
+        .catch((error) => handleErrorResponse(response, error));
     },
   });
   return propertyDescriptor;
