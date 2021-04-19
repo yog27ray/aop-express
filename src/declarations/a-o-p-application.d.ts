@@ -1,8 +1,8 @@
 /// <reference types="node" />
-import * as http from 'http';
 import { Express } from 'express';
-import { Base } from './base';
+import * as http from 'http';
 import { ApplicationType } from '../typings/annotation';
+import { Base } from './base';
 export declare class AOPApplication extends Base {
     static app: Express;
     static server: http.Server;

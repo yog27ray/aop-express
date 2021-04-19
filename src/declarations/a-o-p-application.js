@@ -4,10 +4,13 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AOPApplication = void 0;
+/* tslint:disable:no-empty max-line-length */
+// eslint-disable-next-line max-len
+/* eslint-disable @typescript-eslint/no-unused-vars,@typescript-eslint/no-unused-vars-experimental,@typescript-eslint/no-empty-function,no-unused-vars */
 const express_1 = __importDefault(require("express"));
+const route_1 = require("../annotation/route");
 const base_1 = require("./base");
 const inversify_1 = require("./inversify");
-const route_1 = require("../annotation/route");
 class AOPApplication extends base_1.Base {
     constructor() {
         super();
@@ -19,11 +22,7 @@ class AOPApplication extends base_1.Base {
         this.afterRouteRegistration(AOPApplication.app);
         this.startServer();
     }
-    // eslint-disable-next-line max-len
-    // eslint-disable-next-line @typescript-eslint/no-empty-function,@typescript-eslint/no-unused-vars,@typescript-eslint/no-unused-vars-experimental,no-unused-vars
     beforeRouteRegistration(app) { }
-    // eslint-disable-next-line max-len
-    // eslint-disable-next-line @typescript-eslint/no-empty-function,@typescript-eslint/no-unused-vars,@typescript-eslint/no-unused-vars-experimental,no-unused-vars
     afterRouteRegistration(app) { }
     registerApplicationRoutes(app, applicationRoutes) {
         applicationRoutes.forEach((each) => {

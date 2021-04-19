@@ -1,14 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.AOPMiddleware = exports.Base = exports.AOPModel = exports.AOPController = exports.AOPModule = exports.AOPService = exports.DELETE = exports.POST = exports.PUT = exports.GET = exports.aopModule = exports.aopMiddleware = exports.aopController = exports.aopApplication = exports.aopFactoryConstant = exports.aopFactory = exports.aopService = void 0;
+exports.AOPMiddleware = exports.Base = exports.AOPModel = exports.AOPController = exports.AOPModule = exports.AOPService = exports.AOPApplication = exports.DELETE = exports.POST = exports.PUT = exports.GET = exports.Module = exports.Middleware = exports.Controller = exports.Application = exports.Factory = exports.Service = void 0;
 const annotation_1 = require("./annotation");
-Object.defineProperty(exports, "aopFactory", { enumerable: true, get: function () { return annotation_1.aopFactory; } });
-Object.defineProperty(exports, "aopFactoryConstant", { enumerable: true, get: function () { return annotation_1.aopFactoryConstant; } });
-Object.defineProperty(exports, "aopApplication", { enumerable: true, get: function () { return annotation_1.aopApplication; } });
-Object.defineProperty(exports, "aopController", { enumerable: true, get: function () { return annotation_1.aopController; } });
-Object.defineProperty(exports, "aopModule", { enumerable: true, get: function () { return annotation_1.aopModule; } });
-Object.defineProperty(exports, "aopService", { enumerable: true, get: function () { return annotation_1.aopService; } });
-Object.defineProperty(exports, "aopMiddleware", { enumerable: true, get: function () { return annotation_1.aopMiddleware; } });
+Object.defineProperty(exports, "Factory", { enumerable: true, get: function () { return annotation_1.Factory; } });
+Object.defineProperty(exports, "Application", { enumerable: true, get: function () { return annotation_1.Application; } });
+Object.defineProperty(exports, "Controller", { enumerable: true, get: function () { return annotation_1.Controller; } });
+Object.defineProperty(exports, "Module", { enumerable: true, get: function () { return annotation_1.Module; } });
+Object.defineProperty(exports, "Service", { enumerable: true, get: function () { return annotation_1.Service; } });
+Object.defineProperty(exports, "Middleware", { enumerable: true, get: function () { return annotation_1.Middleware; } });
 Object.defineProperty(exports, "GET", { enumerable: true, get: function () { return annotation_1.GET; } });
 Object.defineProperty(exports, "PUT", { enumerable: true, get: function () { return annotation_1.PUT; } });
 Object.defineProperty(exports, "POST", { enumerable: true, get: function () { return annotation_1.POST; } });
@@ -20,4 +19,5 @@ Object.defineProperty(exports, "AOPController", { enumerable: true, get: functio
 Object.defineProperty(exports, "AOPModel", { enumerable: true, get: function () { return declarations_1.AOPModel; } });
 Object.defineProperty(exports, "Base", { enumerable: true, get: function () { return declarations_1.Base; } });
 Object.defineProperty(exports, "AOPMiddleware", { enumerable: true, get: function () { return declarations_1.AOPMiddleware; } });
+Object.defineProperty(exports, "AOPApplication", { enumerable: true, get: function () { return declarations_1.AOPApplication; } });
 //# sourceMappingURL=index.js.map

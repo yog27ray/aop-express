@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.aopModule = void 0;
+exports.Module = void 0;
 require("reflect-metadata");
 const inversify_1 = require("inversify");
 const inversify_2 = require("../declarations/inversify");
-function aopModule(config) {
+function Module(config) {
     function loadInContainer(container, target) {
         if (!target) {
             return;
@@ -23,5 +23,5 @@ function aopModule(config) {
         Object.assign(Target, { config: { ...config }, loadContainer });
     };
 }
-exports.aopModule = aopModule;
-//# sourceMappingURL=a-o-p-module.js.map
+exports.Module = Module;
+//# sourceMappingURL=module.js.map

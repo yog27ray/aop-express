@@ -1,0 +1,1 @@
+{"version":3,"file":"factory.js","sourceRoot":"","sources":["../../../src/annotation/factory.ts"],"names":[],"mappings":";;;AAAA,yCAAuC;AACvC,yDAA6D;AAE7D,SAAgB,OAAO;IACrB,OAAO,SAAS,SAAS,CAAC,MAAyB;QACjD,sBAAU,EAAE,CAAC,MAAM,CAAC,CAAC;QACrB,4BAAgB,CAAC,IAAI,CAAC,MAAM,CAAC,CAAC,EAAE,CAAC,MAAM,CAAC,CAAC,gBAAgB,EAAE,CAAC;IAC9D,CAAC,CAAC;AACJ,CAAC;AALD,0BAKC"}
