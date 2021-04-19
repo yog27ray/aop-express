@@ -15,15 +15,11 @@ function handleErrorResponse(response, error) {
 function createMiddlewareHandler(ClassMiddlewares) {
     return ClassMiddlewares.map((ClassMiddleware) => {
         const controllerClassMiddleware = inversify_1.middlewareContainer.get(ClassMiddleware);
-        return async (request, response, next) => {
-            try {
-                addMiddlewareData(request);
-                await controllerClassMiddleware.requestHandler(request);
-                next();
-            }
-            catch (error) {
-                handleErrorResponse(response, error);
-            }
+        return (request, response, next) => {
+            addMiddlewareData(request);
+            controllerClassMiddleware.requestHandler(request)
+                .then(next)
+                .catch((error) => handleErrorResponse(response, error));
         };
     });
 }
@@ -42,21 +38,17 @@ function createRequestHandler(target_, requestMethod, path, classMethod, routeCo
         middlewareClass: (routeConfig === null || routeConfig === void 0 ? void 0 : routeConfig.middleware) || [],
     });
     Object.assign(target, {
-        async [handlerMethod](request, response) {
-            try {
-                addMiddlewareData(request);
-                const result = await this[classMethod]({
-                    middlewareData: request.middlewareData,
-                    query: request.query,
-                    params: request.params,
-                    headers: request.headers,
-                    body: request.body,
-                });
-                response.status(result.code || 200).json(result.response);
-            }
-            catch (error) {
-                handleErrorResponse(response, error);
-            }
+        [handlerMethod](request, response) {
+            addMiddlewareData(request);
+            this[classMethod]({
+                middlewareData: request.middlewareData,
+                query: request.query,
+                params: request.params,
+                headers: request.headers,
+                body: request.body,
+            })
+                .then((result) => response.status(result.code || 200).json(result.response))
+                .catch((error) => handleErrorResponse(response, error));
         },
     });
     return propertyDescriptor;
