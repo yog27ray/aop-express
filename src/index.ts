@@ -1,17 +1,17 @@
 import {
-  Factory,
   Application,
   Controller,
-  Module,
-  Service,
-  Middleware,
-  GET,
-  PUT,
-  POST,
   DELETE,
+  Factory,
+  GET,
+  Middleware,
+  Module,
+  POST,
+  PUT,
+  Service,
 } from './annotation';
-import { AOPService, AOPModule, AOPController, AOPModel, Base, AOPMiddleware, AOPApplication } from './declarations';
-import { API_REQUEST, MiddlewareRequest } from './typings/request-response-type';
+import { AOPApplication, AOPController, AOPMiddleware, AOPModel, AOPModule, AOPService, Base } from './declarations';
+import { AOPRequest, AOPResponseType, MiddlewareRequest } from './typings/request-response-type';
 
 export {
   Service,
@@ -24,7 +24,8 @@ export {
   PUT,
   POST,
   DELETE,
-  API_REQUEST,
+  AOPResponseType,
+  AOPRequest,
   MiddlewareRequest,
   AOPApplication,
   AOPService,

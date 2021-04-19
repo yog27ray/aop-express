@@ -1,7 +1,7 @@
 import { NextFunction, RequestHandler, Response } from 'express';
 import { AOPController, AOPMiddleware } from '../declarations';
 import { RouteType } from '../declarations/a-o-p-controller';
-import { API_REQUEST, MiddlewareRequest, RouteConfig, ServiceResponseType } from '../typings/request-response-type';
+import { AOPRequest, MiddlewareRequest, RouteConfig, AOPResponseType } from '../typings/request-response-type';
 import { middlewareContainer } from '../declarations/inversify';
 
 const ExpressFunctionPrefix: string = 'express_';
@@ -32,7 +32,7 @@ export function createMiddlewareHandler(ClassMiddlewares: Array<new () => AOPMid
   });
 }
 
-declare type RequestPropertyDescriptor = TypedPropertyDescriptor<(params?: API_REQUEST) => Promise<ServiceResponseType>>;
+declare type RequestPropertyDescriptor = TypedPropertyDescriptor<(params?: AOPRequest) => Promise<AOPResponseType>>;
 
 function createRequestHandler(
   target_: AOPController & { routes?: Array<RouteType & { middlewareClass?: Array<new () => AOPMiddleware> }> },
