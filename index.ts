@@ -3,7 +3,7 @@ import {
   AOPModel,
   AOPModule,
   AOPRequest,
-  AOPResponseType, AOPService, Application, Base,
+  AOPResponse, AOPService, Application, Base,
   Controller, DELETE,
   Factory, GET, Middleware, MiddlewareRequest, Module, POST, PUT, Service,
 } from './src';
@@ -13,7 +13,7 @@ export {
   AOPModel,
   AOPModule,
   AOPRequest,
-  AOPResponseType, AOPService, Application, Base,
+  AOPResponse, AOPService, Application, Base,
   Controller, DELETE,
   Factory, GET, Middleware, MiddlewareRequest, Module, POST, PUT, Service,
 };

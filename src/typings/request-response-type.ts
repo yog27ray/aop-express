@@ -16,4 +16,4 @@ export declare type MiddlewareRequest = Request & { middlewareData?: { [key: str
 
 export declare interface RouteConfig { middleware?: Array<new () => AOPMiddleware>; }
 
-export declare interface AOPResponseType { code?: number; response: { [key: string]: unknown }; }
+export declare interface AOPResponse { code?: number; response: { [key: string]: unknown }; }

@@ -11,7 +11,7 @@ import {
   Service,
 } from './annotation';
 import { AOPApplication, AOPController, AOPMiddleware, AOPModel, AOPModule, AOPService, Base } from './declarations';
-import { AOPRequest, AOPResponseType, MiddlewareRequest } from './typings/request-response-type';
+import { AOPRequest, AOPResponse, MiddlewareRequest } from './typings/request-response-type';
 
 export {
   Service,
@@ -24,7 +24,7 @@ export {
   PUT,
   POST,
   DELETE,
-  AOPResponseType,
+  AOPResponse,
   AOPRequest,
   MiddlewareRequest,
   AOPApplication,

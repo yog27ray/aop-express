@@ -1,8 +1,8 @@
 import { NextFunction, RequestHandler, Response } from 'express';
 import { AOPController, AOPMiddleware } from '../declarations';
 import { RouteType } from '../declarations/a-o-p-controller';
-import { AOPRequest, MiddlewareRequest, RouteConfig, AOPResponseType } from '../typings/request-response-type';
 import { middlewareContainer } from '../declarations/inversify';
+import { AOPRequest, AOPResponse, MiddlewareRequest, RouteConfig } from '../typings/request-response-type';
 
 const ExpressFunctionPrefix: string = 'express_';
 
@@ -32,7 +32,7 @@ export function createMiddlewareHandler(ClassMiddlewares: Array<new () => AOPMid
   });
 }
 
-declare type RequestPropertyDescriptor = TypedPropertyDescriptor<(params?: AOPRequest) => Promise<AOPResponseType>>;
+declare type RequestPropertyDescriptor = TypedPropertyDescriptor<(params?: AOPRequest) => Promise<AOPResponse>>;
 
 function createRequestHandler(
   target_: AOPController & { routes?: Array<RouteType & { middlewareClass?: Array<new () => AOPMiddleware> }> },
@@ -54,7 +54,7 @@ function createRequestHandler(
     middlewareClass: routeConfig?.middleware || [],
   });
   Object.assign(target, {
-    async [handlerMethod](request: MiddlewareRequest, response: Response) {
+    async [handlerMethod](request: MiddlewareRequest, response: Response): Promise<void> {
       try {
         addMiddlewareData(request);
         const result = await this[classMethod]({
@@ -73,7 +73,7 @@ function createRequestHandler(
   return propertyDescriptor;
 }
 
-function GET(path: string, routeConfig: RouteConfig = {}) {
+function GET(path: string, routeConfig: RouteConfig = {}): (...args: Array<unknown>) => RequestPropertyDescriptor {
   return function decorator(
     target: AOPController & { routes?: Array<RouteType> },
     classMethod: string,
@@ -82,7 +82,7 @@ function GET(path: string, routeConfig: RouteConfig = {}) {
   };
 }
 
-function POST(path: string, routeConfig: RouteConfig = {}) {
+function POST(path: string, routeConfig: RouteConfig = {}): (...args: Array<unknown>) => RequestPropertyDescriptor {
   return function decorator(
     target: AOPController & { routes?: Array<RouteType> },
     classMethod_: string,
@@ -91,7 +91,7 @@ function POST(path: string, routeConfig: RouteConfig = {}) {
   };
 }
 
-function PUT(path: string, routeConfig: RouteConfig = {}) {
+function PUT(path: string, routeConfig: RouteConfig = {}): (...args: Array<unknown>) => RequestPropertyDescriptor {
   return function decorator(
     target: AOPController & { routes?: Array<RouteType> },
     classMethod_: string,
@@ -100,7 +100,7 @@ function PUT(path: string, routeConfig: RouteConfig = {}) {
   };
 }
 
-function DELETE(path: string, routeConfig: RouteConfig = {}) {
+function DELETE(path: string, routeConfig: RouteConfig = {}): (...args: Array<unknown>) => RequestPropertyDescriptor {
   return function decorator(
     target: AOPController & { routes?: Array<RouteType> },
     classMethod_: string,
