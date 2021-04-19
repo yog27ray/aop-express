@@ -66,7 +66,6 @@ function createRequestHandler(
         });
         response.status(result.code || 200).json(result.response);
       } catch (error) {
-        console.log(error);
         handleErrorResponse(response, error);
       }
     },

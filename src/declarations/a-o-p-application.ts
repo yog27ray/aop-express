@@ -43,6 +43,7 @@ export class AOPApplication extends Base {
 
   private startServer(): void {
     AOPApplication.server.listen(AOPApplication.config.port, AOPApplication.config.ip, () => {
+      // eslint-disable-next-line no-console
       console.log('Express server listening on %d, listening on "%s"', AOPApplication.config.port, AOPApplication.config.ip);
     });
   }

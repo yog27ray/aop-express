@@ -1,7 +1,6 @@
 import { injectable, interfaces } from 'inversify';
 import { Base } from './base';
-import { factoryContainer, modelContainer, serviceContainer } from './inversify';
-import { AOPModel } from './a-o-p-model';
+import { factoryContainer, serviceContainer } from './inversify';
 import Abstract = interfaces.Abstract;
 
 @injectable()
