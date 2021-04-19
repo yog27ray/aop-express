@@ -22,7 +22,7 @@ export declare type MiddlewareRequest = Request & {
 export declare interface RouteConfig {
     middleware?: Array<new () => AOPMiddleware>;
 }
-export declare interface AOPResponseType {
+export declare interface AOPResponse {
     code?: number;
     response: {
         [key: string]: unknown;
