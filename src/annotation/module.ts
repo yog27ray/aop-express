@@ -4,7 +4,7 @@ import { Base, AOPModule } from '../declarations';
 import { controllerContainer, serviceContainer } from '../declarations/inversify';
 import { ApplicationModuleType, ModuleType } from '../typings/annotation';
 
-export function aopModule<T extends AOPModule>(config: ModuleType): (Target: new () => T) => void {
+export function Module<T extends AOPModule>(config: ModuleType): (Target: new () => T) => void {
   function loadInContainer(container: Container, target: new () => Base): void {
     if (!target) {
       return;

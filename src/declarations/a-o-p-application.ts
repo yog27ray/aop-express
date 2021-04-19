@@ -1,11 +1,14 @@
-import * as http from 'http';
+/* tslint:disable:no-empty max-line-length */
+// eslint-disable-next-line max-len
+/* eslint-disable @typescript-eslint/no-unused-vars,@typescript-eslint/no-unused-vars-experimental,@typescript-eslint/no-empty-function,no-unused-vars */
 import express, { Express } from 'express';
-import { Base } from './base';
-import { AOPController, RouteType } from './a-o-p-controller';
-import { controllerContainer } from './inversify';
-import { ApplicationModuleType, ApplicationType, ControllerType } from '../typings/annotation';
+import * as http from 'http';
 import { createMiddlewareHandler } from '../annotation/route';
+import { ApplicationModuleType, ApplicationType, ControllerType } from '../typings/annotation';
+import { AOPController, RouteType } from './a-o-p-controller';
 import { AOPMiddleware } from './a-o-p-middleware';
+import { Base } from './base';
+import { controllerContainer } from './inversify';
 
 export class AOPApplication extends Base {
   static app: Express;
@@ -23,12 +26,8 @@ export class AOPApplication extends Base {
     this.startServer();
   }
 
-  // eslint-disable-next-line max-len
-  // eslint-disable-next-line @typescript-eslint/no-empty-function,@typescript-eslint/no-unused-vars,@typescript-eslint/no-unused-vars-experimental,no-unused-vars
   beforeRouteRegistration(app: Express): void {}
 
-  // eslint-disable-next-line max-len
-  // eslint-disable-next-line @typescript-eslint/no-empty-function,@typescript-eslint/no-unused-vars,@typescript-eslint/no-unused-vars-experimental,no-unused-vars
   afterRouteRegistration(app: Express): void {}
 
   private registerApplicationRoutes(app: Express, applicationRoutes: Array<RouteType>): void {
@@ -48,7 +47,7 @@ export class AOPApplication extends Base {
     });
   }
 
-  private generateControllerRoutes(CurrentController: { new(): AOPController } & { config?: ControllerType }): Array<RouteType> {
+  private generateControllerRoutes(CurrentController: (new() => AOPController) & { config?: ControllerType }): Array<RouteType> {
     const routes: Array<RouteType> = [];
     const controller: AOPController & {
       routes?: Array<RouteType & { middlewareClass?: Array<new () => AOPMiddleware> }>;
