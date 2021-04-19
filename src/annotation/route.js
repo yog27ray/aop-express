@@ -55,7 +55,6 @@ function createRequestHandler(target_, requestMethod, path, classMethod, routeCo
                 response.status(result.code || 200).json(result.response);
             }
             catch (error) {
-                console.log(error);
                 handleErrorResponse(response, error);
             }
         },
