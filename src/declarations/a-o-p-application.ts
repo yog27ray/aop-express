@@ -9,7 +9,7 @@ import { AOPController, RouteType } from './a-o-p-controller';
 import { AOPMiddleware } from './a-o-p-middleware';
 import { AOPService } from './a-o-p-service';
 import { Base } from './base';
-import { controllerContainer, loadInContainer, serviceContainer } from './inversify';
+import { controllerContainer, factoryContainer, loadInContainer, serviceContainer } from './inversify';
 
 export class AOPApplication extends Base {
   static app: Express;
@@ -31,6 +31,14 @@ export class AOPApplication extends Base {
   beforeRouteRegistration(app: Express): void {}
 
   afterRouteRegistration(app: Express): void {}
+
+  protected getFactory<T>(table: new () => T): T {
+    return factoryContainer.get(table);
+  }
+
+  protected getService<T extends AOPService>(table: new () => T): T {
+    return serviceContainer.get(table);
+  }
 
   private loadProviders(): void {
     (AOPApplication.config.providers || []).map((provider: new () => AOPService) => loadInContainer(serviceContainer, provider));

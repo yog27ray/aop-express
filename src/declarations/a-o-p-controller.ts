@@ -13,11 +13,11 @@ export declare interface RouteType {
 
 @injectable()
 export class AOPController extends Base {
-  getFactory<T>(table: new () => T): T {
+  protected getFactory<T>(table: new () => T): T {
     return factoryContainer.get(table);
   }
 
-  getService<T extends AOPService>(table: new () => T): T {
+  protected getService<T extends AOPService>(table: new () => T): T {
     return serviceContainer.get(table);
   }
 }
