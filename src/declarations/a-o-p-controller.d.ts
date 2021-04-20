@@ -8,6 +8,6 @@ export declare interface RouteType {
     path: string;
 }
 export declare class AOPController extends Base {
-    getFactory<T>(table: new () => T): T;
-    getService<T extends AOPService>(table: new () => T): T;
+    protected getFactory<T>(table: new () => T): T;
+    protected getService<T extends AOPService>(table: new () => T): T;
 }
