@@ -15,15 +15,19 @@ class AOPApplication extends base_1.Base {
     constructor() {
         super();
         this.beforeRouteRegistration(AOPApplication.app);
-        const ApplicationModule = AOPApplication.config.module;
-        ApplicationModule.loadContainer();
-        const routes = this.generateControllerRoutes(ApplicationModule.config.controller);
+        this.loadProviders();
+        const MainModule = AOPApplication.config.module;
+        MainModule.loadContainer();
+        const routes = this.generateControllerRoutes(MainModule.config.controller);
         this.registerApplicationRoutes(AOPApplication.app, routes);
         this.afterRouteRegistration(AOPApplication.app);
         this.startServer();
     }
     beforeRouteRegistration(app) { }
     afterRouteRegistration(app) { }
+    loadProviders() {
+        (AOPApplication.config.providers || []).map((provider) => inversify_1.loadInContainer(inversify_1.serviceContainer, provider));
+    }
     registerApplicationRoutes(app, applicationRoutes) {
         applicationRoutes.forEach((each) => {
             const { path, middleware } = each;

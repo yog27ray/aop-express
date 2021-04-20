@@ -10,6 +10,7 @@ export declare class AOPApplication extends Base {
     constructor();
     beforeRouteRegistration(app: Express): void;
     afterRouteRegistration(app: Express): void;
+    private loadProviders;
     private registerApplicationRoutes;
     private startServer;
     private generateControllerRoutes;

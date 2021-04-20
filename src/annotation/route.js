@@ -10,7 +10,7 @@ function addMiddlewareData(request) {
 }
 function handleErrorResponse(response, error) {
     const { message } = error;
-    response.status(error.code || 400).send({ message });
+    response.status(typeof error.code === 'number' ? error.code : 400).send({ message });
 }
 function createMiddlewareHandler(ClassMiddlewares) {
     return ClassMiddlewares.map((ClassMiddleware) => {
