@@ -3,7 +3,7 @@ import http from 'http';
 import { AOPApplication } from '../declarations';
 import { ApplicationType } from '../typings/annotation';
 
-export function Application<T extends AOPApplication>(config: ApplicationType) {
+export function Application<T extends AOPApplication>(config: ApplicationType): (Target: new () => T & { app?: Express }) => void {
   return function decorator(Target_: new () => T & { app?: Express }): void {
     const Target = Target_;
     const app: Express = express();

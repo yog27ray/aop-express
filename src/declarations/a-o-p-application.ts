@@ -4,11 +4,12 @@
 import express, { Express } from 'express';
 import * as http from 'http';
 import { createMiddlewareHandler } from '../annotation/route';
-import { ApplicationModuleType, ApplicationType, ControllerType } from '../typings/annotation';
+import { ApplicationType, ControllerType, MainModuleType } from '../typings/annotation';
 import { AOPController, RouteType } from './a-o-p-controller';
 import { AOPMiddleware } from './a-o-p-middleware';
+import { AOPService } from './a-o-p-service';
 import { Base } from './base';
-import { controllerContainer } from './inversify';
+import { controllerContainer, loadInContainer, serviceContainer } from './inversify';
 
 export class AOPApplication extends Base {
   static app: Express;
@@ -18,9 +19,10 @@ export class AOPApplication extends Base {
   constructor() {
     super();
     this.beforeRouteRegistration(AOPApplication.app);
-    const ApplicationModule: ApplicationModuleType = AOPApplication.config.module;
-    ApplicationModule.loadContainer();
-    const routes = this.generateControllerRoutes(ApplicationModule.config.controller);
+    this.loadProviders();
+    const MainModule: MainModuleType = AOPApplication.config.module;
+    MainModule.loadContainer();
+    const routes = this.generateControllerRoutes(MainModule.config.controller);
     this.registerApplicationRoutes(AOPApplication.app, routes);
     this.afterRouteRegistration(AOPApplication.app);
     this.startServer();
@@ -29,6 +31,10 @@ export class AOPApplication extends Base {
   beforeRouteRegistration(app: Express): void {}
 
   afterRouteRegistration(app: Express): void {}
+
+  private loadProviders(): void {
+    (AOPApplication.config.providers || []).map((provider: new () => AOPService) => loadInContainer(serviceContainer, provider));
+  }
 
   private registerApplicationRoutes(app: Express, applicationRoutes: Array<RouteType>): void {
     applicationRoutes.forEach((each: RouteType) => {

@@ -14,7 +14,7 @@ function addMiddlewareData(request: MiddlewareRequest): void {
 
 function handleErrorResponse(response: Response, error: Error & { code?: number }): void {
   const { message } = error;
-  response.status(error.code || 400).send({ message });
+  response.status(typeof error.code === 'number' ? error.code : 400).send({ message });
 }
 
 export function createMiddlewareHandler(ClassMiddlewares: Array<new () => AOPMiddleware>): Array<RequestHandler> {

@@ -18,8 +18,9 @@ export declare interface ControllerType {
 export declare interface ApplicationType {
   module?: new () => AOPModule;
   pathPrefix?: string;
-  port: number,
-  ip: string,
+  port: number;
+  ip: string;
+  providers?: Array<new () => AOPService>;
 }
 
-export declare type ApplicationModuleType = (new () => AOPModule) & { config?: ModuleType, loadContainer?: () => void; };
+export declare type MainModuleType = (new () => AOPModule) & { config?: ModuleType, loadContainer?(): void; };
