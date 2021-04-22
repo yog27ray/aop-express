@@ -1,16 +1,16 @@
-import { Module } from './module';
-import { Service } from './service';
 import { Application } from './application';
-import { Factory } from './factory';
 import { Controller } from './controller';
 import { Middleware } from './middleware';
-import { GET, PUT, POST, DELETE } from './route';
+import { Module } from './module';
+import { Provider } from './provider';
+import { DELETE, GET, POST, PUT } from './route';
+import { Service } from './service';
 
 export {
   Module,
   Application,
-  Factory,
   Service,
+  Provider,
   Controller,
   Middleware,
   GET,

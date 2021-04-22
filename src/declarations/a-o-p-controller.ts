@@ -1,23 +1,20 @@
 import { injectable } from 'inversify';
-import { RequestHandler } from 'express';
-import { Base } from './base';
-import { factoryContainer, serviceContainer } from './inversify';
 import { AOPService } from './a-o-p-service';
-
-export declare interface RouteType {
-  classMethod?: string;
-  middleware?: Array<RequestHandler>;
-  method?: string;
-  path: string;
-}
+import { Base } from './base';
+import { serviceContainer } from './inversify';
 
 @injectable()
-export class AOPController extends Base {
-  protected getFactory<T>(table: new () => T): T {
-    return factoryContainer.get(table);
+export class AOPController<T extends AOPService = undefined> extends Base {
+  private readonly _service: T;
+  constructor() {
+    super();
+    const ConstructorClass: any = this.constructor;
+    if (ConstructorClass.config?.service) {
+      this._service = serviceContainer.get(ConstructorClass.config?.service);
+    }
   }
 
-  protected getService<T extends AOPService>(table: new () => T): T {
-    return serviceContainer.get(table);
+  protected get service(): T {
+    return this._service;
   }
 }

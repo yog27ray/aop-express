@@ -5,11 +5,12 @@ import express, { Express } from 'express';
 import * as http from 'http';
 import { createMiddlewareHandler } from '../annotation/route';
 import { ApplicationType, ControllerType, MainModuleType } from '../typings/annotation';
-import { AOPController, RouteType } from './a-o-p-controller';
+import { RouteType } from '../typings/route';
+import { AOPController } from './a-o-p-controller';
 import { AOPMiddleware } from './a-o-p-middleware';
 import { AOPService } from './a-o-p-service';
 import { Base } from './base';
-import { controllerContainer, factoryContainer, loadInContainer, serviceContainer } from './inversify';
+import { controllerContainer, loadInContainer, providerContainer, serviceContainer } from './inversify';
 
 export class AOPApplication extends Base {
   static app: Express;
@@ -19,7 +20,6 @@ export class AOPApplication extends Base {
   constructor() {
     super();
     this.beforeRouteRegistration(AOPApplication.app);
-    this.loadProviders();
     const MainModule: MainModuleType = AOPApplication.config.module;
     MainModule.loadContainer();
     const routes = this.generateControllerRoutes(MainModule.config.controller);
@@ -32,16 +32,12 @@ export class AOPApplication extends Base {
 
   afterRouteRegistration(app: Express): void {}
 
-  protected getFactory<T>(table: new () => T): T {
-    return factoryContainer.get(table);
-  }
-
   protected getService<T extends AOPService>(table: new () => T): T {
     return serviceContainer.get(table);
   }
 
-  private loadProviders(): void {
-    (AOPApplication.config.providers || []).map((provider: new () => AOPService) => loadInContainer(serviceContainer, provider));
+  protected getProvider<T>(table: new () => T): T {
+    return providerContainer.get(table);
   }
 
   private registerApplicationRoutes(app: Express, applicationRoutes: Array<RouteType>): void {

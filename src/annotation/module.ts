@@ -1,19 +1,34 @@
 // tslint:disable-next-line:no-import-side-effect
 import 'reflect-metadata';
-import { AOPModule } from '../declarations';
-import { controllerContainer, loadInContainer, serviceContainer } from '../declarations/inversify';
-import { MainModuleType, ModuleType } from '../typings/annotation';
+import { AOPController, AOPModule, AOPService } from '../declarations';
+import { controllerContainer, loadInConstantContainer, loadInContainer, modelContainer, serviceContainer } from '../declarations/inversify';
+import { MainModuleType } from '../typings/annotation';
 
-export function Module<T extends AOPModule>(config: ModuleType): (Target: new () => T) => void {
+export function Module<
+  X extends new() => unknown,
+  Y extends AOPService<X>,
+  Z extends AOPModule>(config: {
+  modules?: Array<typeof AOPModule>;
+  controller?: new () => AOPController<Y>;
+  service?: new () => Y;
+  model?: X;
+} = {}): (Target: new () => Z) => void {
   function loadContainer(): void {
     if (this.config.modules) {
       this.config.modules.forEach((each: MainModuleType) => each.loadContainer());
     }
     loadInContainer(controllerContainer, this.config.controller);
     loadInContainer(serviceContainer, this.config.service);
+    loadInConstantContainer(modelContainer, this.config.model);
+    if (this.config.controller && this.config.service) {
+      this.config.controller.config.service = this.config.service;
+      if (this.config.model) {
+        this.config.controller.config.service.config.model = this.config.model;
+      }
+    }
   }
 
-  return function decorator(Target: new () => T): void {
+  return function decorator(Target: new () => Z): void {
     Object.assign(Target, { config: { ...config }, loadContainer });
   };
 }

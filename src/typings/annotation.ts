@@ -4,14 +4,14 @@ export declare interface ServiceType {
   config?: unknown;
 }
 
-export declare interface ModuleType {
+export declare interface ModuleType<T extends AOPService = undefined> {
   modules?: Array<typeof AOPModule>;
-  controller?: new () => AOPController;
-  service?: new () => AOPService;
+  controller?: new () => AOPController<T>;
+  service?: new () => T;
 }
 
-export declare interface ControllerType {
-  routes?: Array<{ path: string; child: new () => AOPController }>;
+export declare interface ControllerType<X extends AOPService = undefined> {
+  routes?: Array<{ path: string; child: new () => AOPController<X> }>;
   middleware?: Array<new () => AOPMiddleware>;
 }
 
@@ -20,7 +20,6 @@ export declare interface ApplicationType {
   pathPrefix?: string;
   port: number;
   ip: string;
-  providers?: Array<new () => AOPService>;
 }
 
 export declare type MainModuleType = (new () => AOPModule) & { config?: ModuleType, loadContainer?(): void; };

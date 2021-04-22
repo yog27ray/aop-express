@@ -1,8 +1,8 @@
 import { NextFunction, RequestHandler, Response } from 'express';
 import { AOPController, AOPMiddleware } from '../declarations';
-import { RouteType } from '../declarations/a-o-p-controller';
 import { middlewareContainer } from '../declarations/inversify';
 import { AOPRequest, AOPResponse, MiddlewareRequest, RouteConfig } from '../typings/request-response-type';
+import { RouteType } from '../typings/route';
 
 const ExpressFunctionPrefix: string = 'express_';
 
