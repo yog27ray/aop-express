@@ -4,7 +4,7 @@ import { Base } from './base';
 import { serviceContainer } from './inversify';
 
 @injectable()
-export class AOPController<T extends AOPService = undefined> extends Base {
+export class AOPController<T extends AOPService = AOPService> extends Base {
   private readonly _service: T;
   constructor() {
     super();
