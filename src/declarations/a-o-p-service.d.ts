@@ -1,8 +1,9 @@
-import { interfaces } from 'inversify';
 import { Base } from './base';
-import Abstract = interfaces.Abstract;
-declare abstract class AOPService extends Base {
-    protected getFactory<T>(table: Abstract<T> | (new () => T)): T;
+declare abstract class AOPService<Z extends new () => unknown = new () => unknown> extends Base {
+    private readonly _model;
+    constructor();
     protected getService<T extends AOPService>(table: new () => T): T;
+    protected getProvider<T>(table: new () => T): T;
+    protected get Model(): Z;
 }
 export { AOPService };

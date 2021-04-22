@@ -15,7 +15,6 @@ class AOPApplication extends base_1.Base {
     constructor() {
         super();
         this.beforeRouteRegistration(AOPApplication.app);
-        this.loadProviders();
         const MainModule = AOPApplication.config.module;
         MainModule.loadContainer();
         const routes = this.generateControllerRoutes(MainModule.config.controller);
@@ -25,14 +24,11 @@ class AOPApplication extends base_1.Base {
     }
     beforeRouteRegistration(app) { }
     afterRouteRegistration(app) { }
-    getFactory(table) {
-        return inversify_1.factoryContainer.get(table);
-    }
     getService(table) {
         return inversify_1.serviceContainer.get(table);
     }
-    loadProviders() {
-        (AOPApplication.config.providers || []).map((provider) => inversify_1.loadInContainer(inversify_1.serviceContainer, provider));
+    getProvider(table) {
+        return inversify_1.providerContainer.get(table);
     }
     registerApplicationRoutes(app, applicationRoutes) {
         applicationRoutes.forEach((each) => {

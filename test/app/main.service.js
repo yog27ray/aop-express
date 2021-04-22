@@ -6,13 +6,12 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.AOPModel = void 0;
-const inversify_1 = require("inversify");
-const base_1 = require("./base");
-let AOPModel = class AOPModel extends base_1.Base {
+exports.MainService = void 0;
+const src_1 = require("../../src");
+let MainService = class MainService extends src_1.AOPService {
 };
-AOPModel = __decorate([
-    inversify_1.injectable()
-], AOPModel);
-exports.AOPModel = AOPModel;
-//# sourceMappingURL=a-o-p-model.js.map
+MainService = __decorate([
+    src_1.Service()
+], MainService);
+exports.MainService = MainService;
+//# sourceMappingURL=main.service.js.map

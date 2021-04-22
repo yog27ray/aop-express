@@ -11,9 +11,8 @@ export declare class AOPApplication extends Base {
     constructor();
     beforeRouteRegistration(app: Express): void;
     afterRouteRegistration(app: Express): void;
-    protected getFactory<T>(table: new () => T): T;
     protected getService<T extends AOPService>(table: new () => T): T;
-    private loadProviders;
+    protected getProvider<T>(table: new () => T): T;
     private registerApplicationRoutes;
     private startServer;
     private generateControllerRoutes;

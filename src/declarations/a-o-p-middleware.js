@@ -11,11 +11,11 @@ const inversify_1 = require("inversify");
 const base_1 = require("./base");
 const inversify_2 = require("./inversify");
 let AOPMiddleware = class AOPMiddleware extends base_1.Base {
-    getFactory(table) {
-        return inversify_2.factoryContainer.get(table);
-    }
     getService(table) {
         return inversify_2.serviceContainer.get(table);
+    }
+    getProvider(table) {
+        return inversify_2.providerContainer.get(table);
     }
 };
 AOPMiddleware = __decorate([
