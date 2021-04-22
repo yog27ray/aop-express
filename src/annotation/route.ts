@@ -60,7 +60,7 @@ function createRequestHandler(
         headers: request.headers,
         body: request.body,
       })
-        .then((result) => response.status(result.code || 200).json(result.response))
+        .then((result: AOPResponse) => response.status(result.code || 200).json(result.response))
         .catch((error) => handleErrorResponse(response, error));
     },
   });
