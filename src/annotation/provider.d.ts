@@ -1,1 +1,2 @@
-export declare function Provider(): (Target: new () => unknown) => void;
+import { AOPProvider } from '../declarations';
+export declare function Provider<T extends AOPProvider>(): (Target: new () => T) => void;

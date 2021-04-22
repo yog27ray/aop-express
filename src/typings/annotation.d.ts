@@ -7,10 +7,10 @@ export declare interface ModuleType<T extends AOPService = undefined> {
     controller?: new () => AOPController<T>;
     service?: new () => T;
 }
-export declare interface ControllerType<X extends AOPService = undefined> {
+export declare interface ControllerType<X extends new () => unknown = new () => unknown, Y extends AOPService<X> = AOPService<X>> {
     routes?: Array<{
         path: string;
-        child: new () => AOPController<X>;
+        child: new () => AOPController<Y>;
     }>;
     middleware?: Array<new () => AOPMiddleware>;
 }
