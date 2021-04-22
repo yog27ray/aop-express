@@ -1,7 +1,8 @@
+import { AOPProvider } from '../declarations';
 import { loadInContainer, providerContainer } from '../declarations/inversify';
 
-export function Provider(): (Target: new () => unknown) => void {
-  return function decorator(Target: new () => unknown): void {
+export function Provider<T extends AOPProvider>(): (Target: new () => T) => void {
+  return function decorator(Target: new () => T): void {
     loadInContainer(providerContainer, Target);
   };
 }

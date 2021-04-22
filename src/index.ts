@@ -10,7 +10,7 @@ import {
   PUT,
   Service,
 } from './annotation';
-import { AOPApplication, AOPController, AOPMiddleware, AOPModule, AOPService, Base } from './declarations';
+import { AOPApplication, AOPController, AOPMiddleware, AOPModule, AOPProvider, AOPService, Base } from './declarations';
 import { AOPRequest, AOPResponse, MiddlewareRequest } from './typings/request-response-type';
 
 export {
@@ -30,6 +30,7 @@ export {
   AOPApplication,
   AOPService,
   AOPModule,
+  AOPProvider,
   AOPController,
   Base,
   AOPMiddleware,

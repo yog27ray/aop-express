@@ -5,9 +5,9 @@ import { controllerContainer, loadInConstantContainer, loadInContainer, modelCon
 import { MainModuleType } from '../typings/annotation';
 
 export function Module<
-  X extends new() => unknown = new() => unknown,
-  Y extends AOPService<X> = AOPService<X>,
-  Z extends AOPModule = AOPModule>(config: {
+  X extends new() => unknown,
+  Y extends AOPService<X>,
+  Z extends AOPModule>(config: {
   modules?: Array<typeof AOPModule>;
   controller?: new () => AOPController<Y>;
   service?: new () => Y;

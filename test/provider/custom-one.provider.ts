@@ -1,7 +1,7 @@
-import { AOPService, Provider } from '../../src';
+import { AOPProvider, Provider } from '../../src';
 
 @Provider()
-export class CustomOneProvider extends AOPService {
+export class CustomOneProvider extends AOPProvider {
   testMethodCall(): string {
     return 'success';
   }
