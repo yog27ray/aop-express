@@ -26,6 +26,8 @@ export declare interface AOPResponse {
     code?: number;
     response: {
         [key: string]: unknown;
-    };
+    } | Array<{
+        [key: string]: unknown;
+    }>;
 }
 export {};
