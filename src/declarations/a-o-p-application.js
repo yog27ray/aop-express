@@ -15,11 +15,13 @@ class AOPApplication extends base_1.Base {
     constructor() {
         super();
         this.beforeRouteRegistration(AOPApplication.app);
-        const MainModule = AOPApplication.config.module;
-        MainModule.loadContainer();
-        const routes = this.generateControllerRoutes(MainModule.config.controller);
-        this.registerApplicationRoutes(AOPApplication.app, routes);
-        this.afterRouteRegistration(AOPApplication.app);
+        if (AOPApplication.config.module) {
+            const MainModule = AOPApplication.config.module;
+            MainModule.loadContainer();
+            const routes = this.generateControllerRoutes(MainModule.config.controller);
+            this.registerApplicationRoutes(AOPApplication.app, routes);
+            this.afterRouteRegistration(AOPApplication.app);
+        }
         this.startServer();
     }
     beforeRouteRegistration(app) { }
