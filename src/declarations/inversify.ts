@@ -11,15 +11,19 @@ function loadInConstantContainer(container: Container, target: new () => Base): 
   if (!target) {
     return;
   }
-  injectable()(target);
+  if (!Reflect.hasOwnMetadata('inversify:paramtypes', target)) {
+    injectable()(target);
+  }
   container.bind(target).toConstantValue(target);
 }
 
-function loadInContainer(container: Container, target: new () => Base): void {
+function loadInContainer(container: Container, target: (new () => Base) & { aopId?: string }): void {
   if (!target) {
     return;
   }
-  injectable()(target);
+  if (!Reflect.hasOwnMetadata('inversify:paramtypes', target)) {
+    injectable()(target);
+  }
   container.bind(target).to(target).inSingletonScope();
 }
 

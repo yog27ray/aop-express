@@ -4,13 +4,14 @@
 import express, { Express } from 'express';
 import * as http from 'http';
 import { createMiddlewareHandler } from '../annotation/route';
-import { ApplicationType, ControllerType, MainModuleType } from '../typings/annotation';
+import { ApplicationType } from '../typings/annotation';
+import { ControllerConfig, ModuleConfig } from '../typings/config';
 import { RouteType } from '../typings/route';
 import { AOPController } from './a-o-p-controller';
 import { AOPMiddleware } from './a-o-p-middleware';
-import { AOPService } from './a-o-p-service';
 import { Base } from './base';
-import { controllerContainer, loadInContainer, providerContainer, serviceContainer } from './inversify';
+import { getConfig } from './class-config';
+import { controllerContainer, providerContainer } from './inversify';
 
 export class AOPApplication extends Base {
   static app: Express;
@@ -21,9 +22,10 @@ export class AOPApplication extends Base {
     super();
     this.beforeRouteRegistration(AOPApplication.app);
     if (AOPApplication.config.module) {
-      const MainModule: MainModuleType = AOPApplication.config.module;
+      const MainModule = AOPApplication.config.module as { aopId?: string, loadContainer?(): void; };
       MainModule.loadContainer();
-      const routes = this.generateControllerRoutes(MainModule.config.controller);
+      const MainModuleConfig: ModuleConfig = getConfig(MainModule.aopId);
+      const routes = this.generateControllerRoutes(MainModuleConfig.controller);
       this.registerApplicationRoutes(AOPApplication.app, routes);
       this.afterRouteRegistration(AOPApplication.app);
     }
@@ -33,10 +35,6 @@ export class AOPApplication extends Base {
   beforeRouteRegistration(app: Express): void {}
 
   afterRouteRegistration(app: Express): void {}
-
-  protected getService<T extends AOPService>(table: new () => T): T {
-    return serviceContainer.get(table);
-  }
 
   protected getProvider<T>(table: new () => T): T {
     return providerContainer.get(table);
@@ -59,11 +57,10 @@ export class AOPApplication extends Base {
     });
   }
 
-  private generateControllerRoutes(CurrentController: (new() => AOPController) & { config?: ControllerType }): Array<RouteType> {
+  private generateControllerRoutes(CurrentController: typeof AOPController & { aopId?: string }): Array<RouteType> {
     const routes: Array<RouteType> = [];
     const controller: AOPController & {
       routes?: Array<RouteType & { middlewareClass?: Array<new () => AOPMiddleware> }>;
-      test: number,
     } = controllerContainer.get(CurrentController);
     const controllerRoutes = controller.routes || [];
     routes.push(...controllerRoutes.map((controllerRoute) => {
@@ -76,9 +73,10 @@ export class AOPApplication extends Base {
         middleware: [...controllerRoute.middleware, (...args: Array<unknown>): void => controller[controllerRoute.classMethod](...args)],
       };
     }));
-    const controllerClassRoutes = CurrentController.config.routes || [];
-    const controllerClassMiddlewares = CurrentController.config.middleware || [];
-    const childrenRoutes = controllerClassRoutes.map((controllerClassRoute: { path: string; child: new () => AOPController}) => {
+    const CurrentControllerConfig: ControllerConfig = getConfig(CurrentController.aopId);
+    const controllerClassRoutes = CurrentControllerConfig.routes || [];
+    const controllerClassMiddlewares = CurrentControllerConfig.middleware || [];
+    const childrenRoutes = controllerClassRoutes.map((controllerClassRoute: { path: string; child: typeof AOPController}) => {
       const subRoutes = this.generateControllerRoutes(controllerClassRoute.child);
       return subRoutes.map((subRoute: RouteType): RouteType => ({
         method: subRoute.method,
