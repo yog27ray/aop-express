@@ -1,6 +1,6 @@
 {
   "name": "aop-express",
-  "version": "1.0.22",
+  "version": "1.0.23",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -38,6 +38,7 @@
   "homepage": "https://github.com/yog27ray/aop-express#readme",
   "dependencies": {
     "inversify": "^5.0.5",
-    "reflect-metadata": "^0.1.13"
+    "reflect-metadata": "^0.1.13",
+    "uuid": "^8.3.2"
   }
 }

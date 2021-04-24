@@ -1,3 +1,3 @@
 import { AOPService } from '../declarations';
-import { ServiceType } from '../typings/annotation';
-export declare function Service(config?: ServiceType): (Target: new () => AOPService) => void;
+import { ServiceConfig } from '../typings/config';
+export declare function Service(config?: ServiceConfig): (Target: new () => AOPService) => void;

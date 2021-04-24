@@ -10,6 +10,7 @@ exports.AOPApplication = void 0;
 const express_1 = __importDefault(require("express"));
 const route_1 = require("../annotation/route");
 const base_1 = require("./base");
+const class_config_1 = require("./class-config");
 const inversify_1 = require("./inversify");
 class AOPApplication extends base_1.Base {
     constructor() {
@@ -18,7 +19,8 @@ class AOPApplication extends base_1.Base {
         if (AOPApplication.config.module) {
             const MainModule = AOPApplication.config.module;
             MainModule.loadContainer();
-            const routes = this.generateControllerRoutes(MainModule.config.controller);
+            const MainModuleConfig = class_config_1.getConfig(MainModule.aopId);
+            const routes = this.generateControllerRoutes(MainModuleConfig.controller);
             this.registerApplicationRoutes(AOPApplication.app, routes);
             this.afterRouteRegistration(AOPApplication.app);
         }
@@ -26,9 +28,6 @@ class AOPApplication extends base_1.Base {
     }
     beforeRouteRegistration(app) { }
     afterRouteRegistration(app) { }
-    getService(table) {
-        return inversify_1.serviceContainer.get(table);
-    }
     getProvider(table) {
         return inversify_1.providerContainer.get(table);
     }
@@ -61,8 +60,9 @@ class AOPApplication extends base_1.Base {
                 middleware: [...controllerRoute.middleware, (...args) => controller[controllerRoute.classMethod](...args)],
             };
         }));
-        const controllerClassRoutes = CurrentController.config.routes || [];
-        const controllerClassMiddlewares = CurrentController.config.middleware || [];
+        const CurrentControllerConfig = class_config_1.getConfig(CurrentController.aopId);
+        const controllerClassRoutes = CurrentControllerConfig.routes || [];
+        const controllerClassMiddlewares = CurrentControllerConfig.middleware || [];
         const childrenRoutes = controllerClassRoutes.map((controllerClassRoute) => {
             const subRoutes = this.generateControllerRoutes(controllerClassRoute.child);
             return subRoutes.map((subRoute) => ({

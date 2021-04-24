@@ -16,7 +16,9 @@ function loadInConstantContainer(container, target) {
     if (!target) {
         return;
     }
-    inversify_1.injectable()(target);
+    if (!Reflect.hasOwnMetadata('inversify:paramtypes', target)) {
+        inversify_1.injectable()(target);
+    }
     container.bind(target).toConstantValue(target);
 }
 exports.loadInConstantContainer = loadInConstantContainer;
@@ -24,7 +26,9 @@ function loadInContainer(container, target) {
     if (!target) {
         return;
     }
-    inversify_1.injectable()(target);
+    if (!Reflect.hasOwnMetadata('inversify:paramtypes', target)) {
+        inversify_1.injectable()(target);
+    }
     container.bind(target).to(target).inSingletonScope();
 }
 exports.loadInContainer = loadInContainer;

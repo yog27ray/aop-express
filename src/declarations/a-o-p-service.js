@@ -12,18 +12,18 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.AOPService = void 0;
 const inversify_1 = require("inversify");
 const base_1 = require("./base");
+const class_config_1 = require("./class-config");
 const inversify_2 = require("./inversify");
 let AOPService = class AOPService extends base_1.Base {
     constructor() {
-        var _a, _b;
         super();
-        const ConstructorClass = this.constructor;
-        if ((_a = ConstructorClass.config) === null || _a === void 0 ? void 0 : _a.model) {
-            this._model = inversify_2.modelContainer.get((_b = ConstructorClass.config) === null || _b === void 0 ? void 0 : _b.model);
+        const serviceConfig = class_config_1.getConfig(this.constructor.aopId);
+        if (serviceConfig === null || serviceConfig === void 0 ? void 0 : serviceConfig.model) {
+            this._model = inversify_2.modelContainer.get(serviceConfig.model);
         }
     }
     getService(table) {
-        return inversify_2.serviceContainer.get(table);
+        return class_config_1.getConfig(this.constructor.aopId).container.get(table);
     }
     getProvider(table) {
         return inversify_2.providerContainer.get(table);
