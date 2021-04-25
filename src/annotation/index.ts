@@ -1,5 +1,6 @@
 import { application } from './application';
 import { controller } from './controller';
+import { factory } from './factory';
 import { middleware } from './middleware';
 import { module } from './module';
 import { provider } from './provider';
@@ -7,14 +8,15 @@ import { DELETE, GET, POST, PUT } from './route';
 import { service } from './service';
 
 export {
-  module,
   application,
-  service,
-  provider,
   controller,
+  factory,
   middleware,
-  GET,
-  PUT,
-  POST,
+  module,
+  provider,
   DELETE,
+  GET,
+  POST,
+  PUT,
+  service,
 };

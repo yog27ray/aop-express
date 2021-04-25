@@ -2,6 +2,7 @@ import { Container, injectable } from 'inversify';
 import { Base } from './base';
 
 const serviceContainer = new Container({});
+const factoryContainer = new Container({});
 const providerContainer = new Container({});
 const controllerContainer = new Container({});
 const modelContainer = new Container({});
@@ -30,6 +31,7 @@ function loadInContainer(container: Container, target: (new () => Base) & { aopI
 export {
   loadInContainer,
   loadInConstantContainer,
+  factoryContainer,
   serviceContainer,
   controllerContainer,
   modelContainer,
