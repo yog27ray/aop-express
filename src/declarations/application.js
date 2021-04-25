@@ -13,6 +13,9 @@ const base_1 = require("./base");
 const class_config_1 = require("./class-config");
 const inversify_1 = require("./inversify");
 class Application extends base_1.Base {
+    static getApp() {
+        return class_config_1.getConfig(this.aopId).app;
+    }
     constructor() {
         super();
         const applicationConfig = class_config_1.getConfig(this.constructor.aopId);
@@ -29,9 +32,6 @@ class Application extends base_1.Base {
     }
     beforeRouteRegistration(app) { }
     afterRouteRegistration(app) { }
-    get app() {
-        return class_config_1.getConfig(this.constructor.aopId).app;
-    }
     getProvider(table) {
         return inversify_1.providerContainer.get(table);
     }
