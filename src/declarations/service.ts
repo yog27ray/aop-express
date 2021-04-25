@@ -1,8 +1,7 @@
 import { Container, injectable } from 'inversify';
 import { Base } from './base';
 import { getConfig } from './class-config';
-import { Factory } from './factory';
-import { factoryContainer, modelContainer, providerContainer } from './inversify';
+import { modelContainer, providerContainer } from './inversify';
 
 @injectable()
 abstract class Service<Z extends new () => unknown = new () => unknown> extends Base {
@@ -14,10 +13,6 @@ abstract class Service<Z extends new () => unknown = new () => unknown> extends 
     if (serviceConfig?.model) {
       this._model = modelContainer.get(serviceConfig.model);
     }
-  }
-
-  protected getFactory<T extends Factory>(table: new () => T): T {
-    return factoryContainer.get(table);
   }
 
   protected getService<T extends Service>(table: new () => T): T {
