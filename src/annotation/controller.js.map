@@ -1,0 +1,1 @@
+{"version":3,"file":"controller.js","sourceRoot":"","sources":["../../../src/annotation/controller.ts"],"names":[],"mappings":";;;AACA,+DAAyD;AAGzD,SAAgB,UAAU,CAItB,SAA2B,EAAE;IAC/B,OAAO,SAAS,SAAS,CAAC,MAAmB;QAC3C,MAAM,CAAC,MAAM,CAAC,MAAM,EAAE,EAAE,KAAK,EAAE,wBAAS,CAAC,MAAM,CAAC,EAAE,CAAC,CAAC;IACtD,CAAC,CAAC;AACJ,CAAC;AARD,gCAQC"}
