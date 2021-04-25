@@ -6,9 +6,6 @@ rm -r *
 cd ..
 node_modules/eslint/bin/eslint.js  --ext .ts src
 node_modules/typescript/bin/tsc -p ./
-cd dist
-rm -r *
-cd ..
 VERSION=$(npm version patch)
 npm i
 cp package.json ./dist/package.json
