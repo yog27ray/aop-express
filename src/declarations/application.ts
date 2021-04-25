@@ -47,7 +47,7 @@ export class Application extends Base {
       const method = each.method || 'use';
       const router = express.Router();
       router[method.toLowerCase().trim()](path, ...middleware);
-      // app.use(Application.config.pathPrefix || '', router);
+      app.use(Application.config.pathPrefix || '', router);
     });
   }
 
