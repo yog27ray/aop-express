@@ -25,7 +25,7 @@ class Application extends base_1.Base {
             MainModule.loadContainer();
             const MainModuleConfig = class_config_1.getConfig(MainModule.aopId);
             const routes = this.generateControllerRoutes(MainModuleConfig.controller);
-            this.registerApplicationRoutes(applicationConfig.app, routes);
+            this.registerApplicationRoutes(applicationConfig.app, routes, applicationConfig.pathPrefix);
             this.afterRouteRegistration(applicationConfig.app);
         }
         this.startServer(applicationConfig);
@@ -35,13 +35,13 @@ class Application extends base_1.Base {
     getProvider(table) {
         return inversify_1.providerContainer.get(table);
     }
-    registerApplicationRoutes(app, applicationRoutes) {
+    registerApplicationRoutes(app, applicationRoutes, pathPrefix) {
         applicationRoutes.forEach((each) => {
             const { path, middleware } = each;
             const method = each.method || 'use';
             const router = express_1.default.Router();
             router[method.toLowerCase().trim()](path, ...middleware);
-            // app.use(Application.config.pathPrefix || '', router);
+            app.use(pathPrefix || '', router);
         });
     }
     startServer(applicationConfig) {
