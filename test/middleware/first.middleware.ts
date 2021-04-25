@@ -1,8 +1,8 @@
-import { Middleware, middleware, MiddlewareRequest } from '../../src';
+import { Middleware, middleware, RouteRequest } from '../../src';
 
 @middleware()
 export class FirstMiddleware extends Middleware {
-  requestHandler(request: MiddlewareRequest): Promise<void> {
+  requestHandler(request: RouteRequest): Promise<void> {
     return Promise.resolve(undefined);
   }
 }

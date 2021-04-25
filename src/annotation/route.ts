@@ -1,14 +1,14 @@
-import { NextFunction, RequestHandler, Response } from 'express';
+import { NextFunction, Request, RequestHandler, Response } from 'express';
 import { Controller, Middleware } from '../declarations';
 import { middlewareContainer } from '../declarations/inversify';
-import { AOPRequest, AOPResponse, MiddlewareRequest, RouteConfig } from '../typings/request-response-type';
+import { RouteConfig, RouteRequest, RouteResponse } from '../typings/request-response-type';
 import { RouteType } from '../typings/route';
 
 const ExpressFunctionPrefix: string = 'express_';
 
-function addMiddlewareData(request: MiddlewareRequest): void {
-  if (!request.middlewareData) {
-    request.middlewareData = {};
+function addRequestContext(request: { context?: Record<string, unknown> }): void {
+  if (!request.context) {
+    request.context = {};
   }
 }
 
@@ -17,19 +17,29 @@ function handleErrorResponse(response: Response, error: Error & { code?: number 
   response.status(typeof error.code === 'number' ? error.code : 400).send({ message });
 }
 
+function getRouteRequestFromRequest(request: Request & { context?: Record<string, unknown> }): RouteRequest {
+  addRequestContext(request);
+  return {
+    query: request.query,
+    params: request.params,
+    headers: request.headers,
+    body: request.body,
+    context: request.context,
+  };
+}
+
 export function createMiddlewareHandler(ClassMiddlewares: Array<new () => Middleware>): Array<RequestHandler> {
   return ClassMiddlewares.map((ClassMiddleware) => {
     const controllerClassMiddleware = middlewareContainer.get<Middleware>(ClassMiddleware);
-    return (request: MiddlewareRequest, response: Response, next: NextFunction): void => {
-      addMiddlewareData(request);
-      controllerClassMiddleware.requestHandler(request)
+    return (request: Request, response: Response, next: NextFunction): void => {
+      controllerClassMiddleware.requestHandler(getRouteRequestFromRequest(request))
         .then(next)
         .catch((error) => handleErrorResponse(response, error));
     };
   });
 }
 
-declare type RequestPropertyDescriptor = TypedPropertyDescriptor<(params?: AOPRequest) => Promise<AOPResponse>>;
+declare type RequestPropertyDescriptor = TypedPropertyDescriptor<(params?: RouteRequest) => Promise<RouteResponse>>;
 
 function createRequestHandler(
   target_: Controller & { routes?: Array<RouteType & { middlewareClass?: Array<new () => Middleware> }> },
@@ -51,16 +61,9 @@ function createRequestHandler(
     middlewareClass: routeConfig?.middleware || [],
   });
   Object.assign(target, {
-    [handlerMethod](request: MiddlewareRequest, response: Response): void {
-      addMiddlewareData(request);
-      this[classMethod]({
-        middlewareData: request.middlewareData,
-        query: request.query,
-        params: request.params,
-        headers: request.headers,
-        body: request.body,
-      })
-        .then((result: AOPResponse) => response.status(result.code || 200).json(result.response))
+    [handlerMethod](request: Request, response: Response): void {
+      this[classMethod](getRouteRequestFromRequest(request))
+        .then((result: RouteResponse) => response.status(result.code || 200).json(result.response))
         .catch((error) => handleErrorResponse(response, error));
     },
   });

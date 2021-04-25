@@ -1,19 +1,16 @@
-import { Request } from 'express';
 import { IncomingHttpHeaders } from 'http';
 import { Middleware } from '../declarations';
 
 interface ParsedQs { [key: string]: undefined | string | Array<string> | ParsedQs | Array<ParsedQs>; }
 
-export declare interface AOPRequest {
+export declare interface RouteRequest {
   query: ParsedQs;
-  params: { [key: string]: string };
+  params: Record<string, string>;
   headers: IncomingHttpHeaders;
-  middlewareData: unknown;
+  context: Record<string, unknown>;
   body?: unknown;
 }
 
-export declare type MiddlewareRequest = Request & { middlewareData?: { [key: string]: unknown } };
-
 export declare interface RouteConfig { middleware?: Array<new () => Middleware>; }
 
-export declare interface AOPResponse { code?: number; response: { [key: string]: unknown } | Array<{ [key: string]: unknown; }>; }
+export declare interface RouteResponse { code?: number; response: { [key: string]: unknown } | Array<{ [key: string]: unknown; }>; }

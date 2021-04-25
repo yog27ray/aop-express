@@ -1,20 +1,19 @@
 import {
-  AOPRequest, AOPResponse, Application,
-  application,
-  Base,
+  Application, application, Base,
   Controller,
-  controller, DELETE, factory, Factory, GET,
-  Middleware, middleware,
-  MiddlewareRequest,
-  Module, module, POST, Provider, provider, PUT, Service, service,
+  controller,
+  DELETE,
+  factory, Factory, GET, Middleware, middleware,
+  Module, module,
+  POST, Provider, provider, PUT, RouteRequest, RouteResponse, Service, service,
 } from './src';
 
 export {
-  AOPRequest, AOPResponse, Application,
-  application,
-  Base,
-  Controller, controller, DELETE, factory, Factory, GET,
-  Middleware, middleware,
-  MiddlewareRequest,
-  Module, module, POST, Provider, provider, PUT, Service, service,
+  Application, application, Base,
+  Controller,
+  controller,
+  DELETE,
+  factory, Factory, GET, Middleware, middleware,
+  Module, module,
+  POST, Provider, provider, PUT, RouteRequest, RouteResponse, Service, service,
 };

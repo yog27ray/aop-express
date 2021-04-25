@@ -1,5 +1,5 @@
 import { injectable } from 'inversify';
-import { MiddlewareRequest } from '../typings/request-response-type';
+import { RouteRequest } from '../typings/request-response-type';
 import { Base } from './base';
 import { providerContainer, serviceContainer } from './inversify';
 import { Service } from './service';
@@ -14,5 +14,5 @@ export abstract class Middleware extends Base {
     return providerContainer.get(table);
   }
 
-  abstract requestHandler(request: MiddlewareRequest): Promise<void>;
+  abstract requestHandler(request: RouteRequest): Promise<void>;
 }

@@ -1,4 +1,4 @@
-import { Controller, AOPResponse, controller, GET } from '../../src';
+import { Controller, controller, GET, RouteResponse } from '../../src';
 import { MainService } from './main.service';
 import { V1Controller } from './v1/v1.controller';
 
@@ -9,7 +9,7 @@ import { V1Controller } from './v1/v1.controller';
 })
 export class MainController extends Controller<MainService> {
   @GET('/')
-  getMainController(): Promise<AOPResponse> {
+  getMainController(): Promise<RouteResponse> {
     return Promise.resolve({ response: {} });
   }
 }

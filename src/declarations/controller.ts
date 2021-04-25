@@ -1,9 +1,9 @@
 import { injectable } from 'inversify';
 import { ModuleConfig } from '../typings/config';
-import { Service } from './service';
 import { Base } from './base';
 import { getConfig } from './class-config';
 import { serviceContainer } from './inversify';
+import { Service } from './service';
 
 @injectable()
 export class Controller<T extends Service = Service> extends Base {

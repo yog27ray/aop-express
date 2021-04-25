@@ -1,4 +1,4 @@
-import { AOPResponse, Controller, controller, PUT } from '../../../../src';
+import { Controller, controller, PUT, RouteResponse } from '../../../../src';
 import { FirstMiddleware } from '../../../middleware/first.middleware';
 import { SecondMiddleware } from '../../../middleware/second.middleware';
 import { SubModuleTwoService } from './sub-module-two.service';
@@ -11,7 +11,7 @@ export class SubModuleTwoController extends Controller<SubModuleTwoService> {
   }
 
   @PUT('/', { middleware: [FirstMiddleware, SecondMiddleware] })
-  testPutMethod(): Promise<AOPResponse> {
+  testPutMethod(): Promise<RouteResponse> {
     this.service.testMethodCall();
     return Promise.resolve({ response: {} });
   }
