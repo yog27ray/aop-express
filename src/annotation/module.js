@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Module = void 0;
+exports.module = void 0;
 // tslint:disable-next-line:no-import-side-effect
 require("reflect-metadata");
 const class_config_1 = require("../declarations/class-config");
 const inversify_1 = require("../declarations/inversify");
-function Module(config = {}) {
+function module(config = {}) {
     function loadContainer(ParentServiceClasses = []) {
         const CurrentModuleConfig = class_config_1.getConfig(this.aopId);
         if (CurrentModuleConfig.service) {
@@ -31,5 +31,5 @@ function Module(config = {}) {
         Object.assign(Target, { aopId: class_config_1.setConfig(config), loadContainer });
     };
 }
-exports.Module = Module;
+exports.module = module;
 //# sourceMappingURL=module.js.map

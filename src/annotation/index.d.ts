@@ -1,8 +1,8 @@
-import { Application } from './application';
-import { Controller } from './controller';
-import { Middleware } from './middleware';
-import { Module } from './module';
-import { Provider } from './provider';
+import { application } from './application';
+import { controller } from './controller';
+import { middleware } from './middleware';
+import { module } from './module';
+import { provider } from './provider';
 import { DELETE, GET, POST, PUT } from './route';
-import { Service } from './service';
-export { Module, Application, Service, Provider, Controller, Middleware, GET, PUT, POST, DELETE, };
+import { service } from './service';
+export { module, application, service, provider, controller, middleware, GET, PUT, POST, DELETE, };

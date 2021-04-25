@@ -1,4 +1,4 @@
-import { Application, Controller, DELETE, GET, Middleware, Module, POST, Provider, PUT, Service } from './annotation';
-import { AOPApplication, AOPController, AOPMiddleware, AOPModule, AOPProvider, AOPService, Base } from './declarations';
+import { application, controller, DELETE, GET, middleware, module, POST, provider, PUT, service } from './annotation';
+import { Application, Controller, Middleware, Module, Provider, Service, Base } from './declarations';
 import { AOPRequest, AOPResponse, MiddlewareRequest } from './typings/request-response-type';
-export { Service, Application, Controller, Middleware, Module, GET, PUT, POST, Provider, DELETE, AOPResponse, AOPRequest, MiddlewareRequest, AOPApplication, AOPService, AOPModule, AOPProvider, AOPController, Base, AOPMiddleware, };
+export { service, application, controller, middleware, module, GET, PUT, POST, provider, DELETE, AOPResponse, AOPRequest, MiddlewareRequest, Application, Service, Module, Provider, Controller, Base, Middleware, };

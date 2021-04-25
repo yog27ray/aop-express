@@ -1,7 +1,7 @@
 /// <reference types="node" />
 import { Request } from 'express';
 import { IncomingHttpHeaders } from 'http';
-import { AOPMiddleware } from '../declarations';
+import { Middleware } from '../declarations';
 interface ParsedQs {
     [key: string]: undefined | string | Array<string> | ParsedQs | Array<ParsedQs>;
 }
@@ -20,7 +20,7 @@ export declare type MiddlewareRequest = Request & {
     };
 };
 export declare interface RouteConfig {
-    middleware?: Array<new () => AOPMiddleware>;
+    middleware?: Array<new () => Middleware>;
 }
 export declare interface AOPResponse {
     code?: number;

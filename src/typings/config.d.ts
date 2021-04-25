@@ -1,16 +1,22 @@
-import { AOPController, AOPMiddleware, AOPModule, AOPService } from '../declarations';
+import { Controller, Middleware, Module, Service } from '../declarations';
 declare type ControllerConfig = {
     routes?: Array<{
         path: string;
-        child: new () => AOPController;
+        child: new () => Controller;
     }>;
-    middleware?: Array<new () => AOPMiddleware>;
+    middleware?: Array<new () => Middleware>;
 };
 declare type ServiceConfig = {};
-declare type ModuleConfig<T extends AOPService = undefined> = {
-    modules?: Array<typeof AOPModule>;
-    controller?: new () => AOPController<T>;
+declare type ModuleConfig<T extends Service = undefined> = {
+    modules?: Array<typeof Module>;
+    controller?: new () => Controller<T>;
     service?: new () => T;
     model?: new () => unknown;
 };
-export { ControllerConfig, ModuleConfig, ServiceConfig };
+declare type ApplicationConfig = {
+    module?: new () => Module;
+    pathPrefix?: string;
+    port: number;
+    ip: string;
+};
+export { ApplicationConfig, ControllerConfig, ModuleConfig, ServiceConfig };

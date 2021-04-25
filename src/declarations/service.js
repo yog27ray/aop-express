@@ -9,12 +9,12 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.AOPService = void 0;
+exports.Service = void 0;
 const inversify_1 = require("inversify");
 const base_1 = require("./base");
 const class_config_1 = require("./class-config");
 const inversify_2 = require("./inversify");
-let AOPService = class AOPService extends base_1.Base {
+let Service = class Service extends base_1.Base {
     constructor() {
         super();
         const serviceConfig = class_config_1.getConfig(this.constructor.aopId);
@@ -32,9 +32,9 @@ let AOPService = class AOPService extends base_1.Base {
         return this._model;
     }
 };
-AOPService = __decorate([
+Service = __decorate([
     inversify_1.injectable(),
     __metadata("design:paramtypes", [])
-], AOPService);
-exports.AOPService = AOPService;
-//# sourceMappingURL=a-o-p-service.js.map
+], Service);
+exports.Service = Service;
+//# sourceMappingURL=service.js.map

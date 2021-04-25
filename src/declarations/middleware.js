@@ -6,11 +6,11 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.AOPMiddleware = void 0;
+exports.Middleware = void 0;
 const inversify_1 = require("inversify");
 const base_1 = require("./base");
 const inversify_2 = require("./inversify");
-let AOPMiddleware = class AOPMiddleware extends base_1.Base {
+let Middleware = class Middleware extends base_1.Base {
     getService(table) {
         return inversify_2.serviceContainer.get(table);
     }
@@ -18,8 +18,8 @@ let AOPMiddleware = class AOPMiddleware extends base_1.Base {
         return inversify_2.providerContainer.get(table);
     }
 };
-AOPMiddleware = __decorate([
+Middleware = __decorate([
     inversify_1.injectable()
-], AOPMiddleware);
-exports.AOPMiddleware = AOPMiddleware;
-//# sourceMappingURL=a-o-p-middleware.js.map
+], Middleware);
+exports.Middleware = Middleware;
+//# sourceMappingURL=middleware.js.map

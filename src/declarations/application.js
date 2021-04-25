@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.AOPApplication = void 0;
+exports.Application = void 0;
 /* tslint:disable:no-empty max-line-length */
 // eslint-disable-next-line max-len
 /* eslint-disable @typescript-eslint/no-unused-vars,@typescript-eslint/no-unused-vars-experimental,@typescript-eslint/no-empty-function,no-unused-vars */
@@ -12,22 +12,26 @@ const route_1 = require("../annotation/route");
 const base_1 = require("./base");
 const class_config_1 = require("./class-config");
 const inversify_1 = require("./inversify");
-class AOPApplication extends base_1.Base {
+class Application extends base_1.Base {
     constructor() {
         super();
-        this.beforeRouteRegistration(AOPApplication.app);
-        if (AOPApplication.config.module) {
-            const MainModule = AOPApplication.config.module;
+        const applicationConfig = class_config_1.getConfig(this.constructor.aopId);
+        this.beforeRouteRegistration(applicationConfig.app);
+        if (applicationConfig.module) {
+            const MainModule = applicationConfig.module;
             MainModule.loadContainer();
             const MainModuleConfig = class_config_1.getConfig(MainModule.aopId);
             const routes = this.generateControllerRoutes(MainModuleConfig.controller);
-            this.registerApplicationRoutes(AOPApplication.app, routes);
-            this.afterRouteRegistration(AOPApplication.app);
+            this.registerApplicationRoutes(applicationConfig.app, routes);
+            this.afterRouteRegistration(applicationConfig.app);
         }
-        this.startServer();
+        this.startServer(applicationConfig);
     }
     beforeRouteRegistration(app) { }
     afterRouteRegistration(app) { }
+    get app() {
+        return class_config_1.getConfig(this.constructor.aopId).app;
+    }
     getProvider(table) {
         return inversify_1.providerContainer.get(table);
     }
@@ -37,13 +41,13 @@ class AOPApplication extends base_1.Base {
             const method = each.method || 'use';
             const router = express_1.default.Router();
             router[method.toLowerCase().trim()](path, ...middleware);
-            app.use(AOPApplication.config.pathPrefix || '', router);
+            // app.use(Application.config.pathPrefix || '', router);
         });
     }
-    startServer() {
-        AOPApplication.server.listen(AOPApplication.config.port, AOPApplication.config.ip, () => {
+    startServer(applicationConfig) {
+        applicationConfig.server.listen(applicationConfig.port, applicationConfig.ip, () => {
             // eslint-disable-next-line no-console
-            console.log('Express server listening on %d, listening on "%s"', AOPApplication.config.port, AOPApplication.config.ip);
+            console.log('Express server listening on %d, listening on "%s"', applicationConfig.port, applicationConfig.ip);
         });
     }
     generateControllerRoutes(CurrentController) {
@@ -80,5 +84,5 @@ class AOPApplication extends base_1.Base {
         return routes;
     }
 }
-exports.AOPApplication = AOPApplication;
-//# sourceMappingURL=a-o-p-application.js.map
+exports.Application = Application;
+//# sourceMappingURL=application.js.map

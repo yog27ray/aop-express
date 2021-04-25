@@ -1,21 +1,21 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.DELETE = exports.POST = exports.PUT = exports.GET = exports.Middleware = exports.Controller = exports.Provider = exports.Service = exports.Application = exports.Module = void 0;
+exports.DELETE = exports.POST = exports.PUT = exports.GET = exports.middleware = exports.controller = exports.provider = exports.service = exports.application = exports.module = void 0;
 const application_1 = require("./application");
-Object.defineProperty(exports, "Application", { enumerable: true, get: function () { return application_1.Application; } });
+Object.defineProperty(exports, "application", { enumerable: true, get: function () { return application_1.application; } });
 const controller_1 = require("./controller");
-Object.defineProperty(exports, "Controller", { enumerable: true, get: function () { return controller_1.Controller; } });
+Object.defineProperty(exports, "controller", { enumerable: true, get: function () { return controller_1.controller; } });
 const middleware_1 = require("./middleware");
-Object.defineProperty(exports, "Middleware", { enumerable: true, get: function () { return middleware_1.Middleware; } });
+Object.defineProperty(exports, "middleware", { enumerable: true, get: function () { return middleware_1.middleware; } });
 const module_1 = require("./module");
-Object.defineProperty(exports, "Module", { enumerable: true, get: function () { return module_1.Module; } });
+Object.defineProperty(exports, "module", { enumerable: true, get: function () { return module_1.module; } });
 const provider_1 = require("./provider");
-Object.defineProperty(exports, "Provider", { enumerable: true, get: function () { return provider_1.Provider; } });
+Object.defineProperty(exports, "provider", { enumerable: true, get: function () { return provider_1.provider; } });
 const route_1 = require("./route");
 Object.defineProperty(exports, "DELETE", { enumerable: true, get: function () { return route_1.DELETE; } });
 Object.defineProperty(exports, "GET", { enumerable: true, get: function () { return route_1.GET; } });
 Object.defineProperty(exports, "POST", { enumerable: true, get: function () { return route_1.POST; } });
 Object.defineProperty(exports, "PUT", { enumerable: true, get: function () { return route_1.PUT; } });
 const service_1 = require("./service");
-Object.defineProperty(exports, "Service", { enumerable: true, get: function () { return service_1.Service; } });
+Object.defineProperty(exports, "service", { enumerable: true, get: function () { return service_1.service; } });
 //# sourceMappingURL=index.js.map

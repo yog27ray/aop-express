@@ -1,2 +1,2 @@
-import { AOPMiddleware } from '../declarations';
-export declare function Middleware(): (target: new () => AOPMiddleware) => void;
+import { Middleware } from '../declarations';
+export declare function middleware(): (target: new () => Middleware) => void;

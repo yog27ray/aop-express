@@ -1,3 +1,3 @@
-import { AOPService } from '../declarations';
+import { Service } from '../declarations';
 import { ServiceConfig } from '../typings/config';
-export declare function Service(config?: ServiceConfig): (Target: new () => AOPService) => void;
+export declare function service(config?: ServiceConfig): (Target: new () => Service) => void;

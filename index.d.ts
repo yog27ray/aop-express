@@ -1,2 +1,2 @@
-import { AOPApplication, AOPController, AOPMiddleware, AOPModule, AOPProvider, AOPRequest, AOPResponse, AOPService, Application, Base, Controller, DELETE, GET, Middleware, MiddlewareRequest, Module, POST, Provider, PUT, Service } from './src';
-export { AOPApplication, AOPController, AOPMiddleware, AOPModule, AOPProvider, AOPRequest, AOPResponse, AOPService, Application, Base, Controller, DELETE, GET, Middleware, MiddlewareRequest, Module, POST, Provider, PUT, Service, };
+import { Application, Controller, Middleware, Module, Provider, AOPRequest, AOPResponse, Service, application, Base, controller, DELETE, GET, middleware, MiddlewareRequest, module, POST, provider, PUT, service } from './src';
+export { Application, Controller, Middleware, Module, Provider, AOPRequest, AOPResponse, Service, application, Base, controller, DELETE, GET, middleware, MiddlewareRequest, module, POST, provider, PUT, service, };

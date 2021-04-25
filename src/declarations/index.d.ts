@@ -1,8 +1,8 @@
-import { AOPApplication } from './a-o-p-application';
-import { AOPController } from './a-o-p-controller';
-import { AOPMiddleware } from './a-o-p-middleware';
-import { AOPModule } from './a-o-p-module';
-import { AOPProvider } from './a-o-p-provider';
-import { AOPService } from './a-o-p-service';
+import { Application } from './application';
+import { Controller } from './controller';
+import { Middleware } from './middleware';
+import { Module } from './module';
+import { Provider } from './provider';
+import { Service } from './service';
 import { Base } from './base';
-export { AOPService, AOPController, Base, AOPModule, AOPMiddleware, AOPApplication, AOPProvider };
+export { Service, Controller, Base, Module, Middleware, Application, Provider };

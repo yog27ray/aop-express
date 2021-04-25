@@ -1,6 +1,6 @@
 import { Express } from 'express';
-import { AOPApplication } from '../declarations';
-import { ApplicationType } from '../typings/annotation';
-export declare function Application<T extends AOPApplication>(config: ApplicationType): (Target: new () => T & {
+import { Application } from '../declarations';
+import { ApplicationConfig } from '../typings/config';
+export declare function application<T extends Application>(config: ApplicationConfig): (Target: new () => T & {
     app?: Express;
 }) => void;

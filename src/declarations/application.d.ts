@@ -1,15 +1,10 @@
-/// <reference types="node" />
 import { Express } from 'express';
-import * as http from 'http';
-import { ApplicationType } from '../typings/annotation';
 import { Base } from './base';
-export declare class AOPApplication extends Base {
-    static app: Express;
-    static server: http.Server;
-    static config: ApplicationType;
+export declare class Application extends Base {
     constructor();
     beforeRouteRegistration(app: Express): void;
     afterRouteRegistration(app: Express): void;
+    get app(): Express;
     protected getProvider<T>(table: new () => T): T;
     private registerApplicationRoutes;
     private startServer;

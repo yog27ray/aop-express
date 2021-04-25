@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Controller = void 0;
+exports.controller = void 0;
 const class_config_1 = require("../declarations/class-config");
-function Controller(config = {}) {
+function controller(config = {}) {
     return function decorator(Target) {
         Object.assign(Target, { aopId: class_config_1.setConfig(config) });
     };
 }
-exports.Controller = Controller;
+exports.controller = controller;
 //# sourceMappingURL=controller.js.map
