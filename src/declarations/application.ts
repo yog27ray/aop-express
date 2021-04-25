@@ -13,6 +13,10 @@ import { controllerContainer, providerContainer } from './inversify';
 import { Middleware } from './middleware';
 
 export class Application extends Base {
+  static getApp<T extends typeof Application>(this: T): Express {
+    return (getConfig((this as { aopId?: string }).aopId) as { app: Express }).app;
+  }
+
   constructor() {
     super();
     const applicationConfig = getConfig((this.constructor as { aopId?: string }).aopId) as (
@@ -32,10 +36,6 @@ export class Application extends Base {
   beforeRouteRegistration(app: Express): void {}
 
   afterRouteRegistration(app: Express): void {}
-
-  get app(): Express {
-    return (getConfig((this.constructor as { aopId?: string }).aopId) as { app: Express }).app;
-  }
 
   protected getProvider<T>(table: new () => T): T {
     return providerContainer.get(table);

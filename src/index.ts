@@ -10,28 +10,15 @@ import {
   PUT,
   service,
 } from './annotation';
-import { Application, Controller, Middleware, Module, Provider, Service, Base } from './declarations';
+import { Application, Base, Controller, Middleware, Module, Provider, Service } from './declarations';
 import { AOPRequest, AOPResponse, MiddlewareRequest } from './typings/request-response-type';
 
 export {
-  service,
+  AOPRequest, AOPResponse, Application,
   application,
-  controller,
-  middleware,
-  module,
-  GET,
-  PUT,
-  POST,
-  provider,
-  DELETE,
-  AOPResponse,
-  AOPRequest,
-  MiddlewareRequest,
-  Application,
-  Service,
-  Module,
-  Provider,
-  Controller,
   Base,
-  Middleware,
+  Controller, controller, DELETE, GET,
+  Middleware, middleware,
+  MiddlewareRequest,
+  Module, module, POST, Provider, provider, PUT, Service, service,
 };

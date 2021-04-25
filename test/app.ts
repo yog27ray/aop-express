@@ -13,7 +13,7 @@ import { MainModule } from './app/main.module';
 class App extends Application {
 }
 
-const { app }: { app?: Express } = App as { app?: Express };
+const app: Express = App.getApp();
 
 // Expose app
 export { app };
