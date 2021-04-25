@@ -1,5 +1,5 @@
-import { AOPController, Controller } from '../../../../src';
+import { Controller, controller } from '../../../../src';
 
-@Controller()
-export class SubModuleOneController extends AOPController {
+@controller()
+export class SubModuleOneController extends Controller {
 }

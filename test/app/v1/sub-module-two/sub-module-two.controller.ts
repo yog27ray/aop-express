@@ -1,10 +1,10 @@
-import { AOPController, AOPResponse, Controller, PUT } from '../../../../src';
+import { AOPResponse, Controller, controller, PUT } from '../../../../src';
 import { FirstMiddleware } from '../../../middleware/first.middleware';
 import { SecondMiddleware } from '../../../middleware/second.middleware';
 import { SubModuleTwoService } from './sub-module-two.service';
 
-@Controller({ middleware: [SecondMiddleware] })
-export class SubModuleTwoController extends AOPController<SubModuleTwoService> {
+@controller({ middleware: [SecondMiddleware] })
+export class SubModuleTwoController extends Controller<SubModuleTwoService> {
   constructor() {
     super();
     console.log('>>>>>>ServiceFunctionCall', this.service.testMethodCall());

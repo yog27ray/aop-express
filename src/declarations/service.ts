@@ -4,7 +4,7 @@ import { getConfig } from './class-config';
 import { modelContainer, providerContainer } from './inversify';
 
 @injectable()
-abstract class AOPService<Z extends new () => unknown = new () => unknown> extends Base {
+abstract class Service<Z extends new () => unknown = new () => unknown> extends Base {
   private readonly _model: Z;
 
   constructor() {
@@ -15,7 +15,7 @@ abstract class AOPService<Z extends new () => unknown = new () => unknown> exten
     }
   }
 
-  protected getService<T extends AOPService>(table: new () => T): T {
+  protected getService<T extends Service>(table: new () => T): T {
     return (getConfig((this.constructor as { aopId?: string }).aopId) as { container?: Container }).container.get(table);
   }
 
@@ -28,4 +28,4 @@ abstract class AOPService<Z extends new () => unknown = new () => unknown> exten
   }
 }
 
-export { AOPService };
+export { Service };

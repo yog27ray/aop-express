@@ -1,19 +1,19 @@
 import { Express } from 'express';
 // tslint:disable-next-line:no-import-side-effect
 import 'reflect-metadata';
-import { AOPApplication, Application } from '../src';
+import { Application, application } from '../src';
 import { MainModule } from './app/main.module';
 
-@Application({
+@application({
   module: MainModule,
   port: 3001,
   ip: '0.0.0.0',
   pathPrefix: '/api',
 })
-class App extends AOPApplication {
+class App extends Application {
 }
 
-const { app }: { app: Express } = App;
+const { app }: { app?: Express } = App as { app?: Express };
 
 // Expose app
 export { app };

@@ -1,7 +1,7 @@
-import { AOPMiddleware, Middleware, MiddlewareRequest } from '../../src';
+import { Middleware, middleware, MiddlewareRequest } from '../../src';
 
-@Middleware()
-export class SecondMiddleware extends AOPMiddleware {
+@middleware()
+export class SecondMiddleware extends Middleware {
   requestHandler(request: MiddlewareRequest): Promise<void> {
     return Promise.resolve(undefined);
   }

@@ -1,11 +1,11 @@
-import { AOPController, AOPService } from '../declarations';
+import { Controller, Service } from '../declarations';
 import { setConfig } from '../declarations/class-config';
 import { ControllerConfig } from '../typings/config';
 
-export function Controller<
+export function controller<
   X extends new() => unknown,
-  Y extends AOPService<X>,
-  Z extends AOPController<Y>
+  Y extends Service<X>,
+  Z extends Controller<Y>
   >(config: ControllerConfig = {}): (Target: new () => Z) => void {
   return function decorator(Target: new () => Z): void {
     Object.assign(Target, { aopId: setConfig(config) });

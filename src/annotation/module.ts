@@ -1,17 +1,17 @@
 import { Container } from 'inversify';
 // tslint:disable-next-line:no-import-side-effect
 import 'reflect-metadata';
-import { AOPController, AOPModule, AOPService } from '../declarations';
+import { Controller, Module, Service } from '../declarations';
 import { getConfig, setConfig } from '../declarations/class-config';
 import { controllerContainer, loadInConstantContainer, loadInContainer, modelContainer, serviceContainer } from '../declarations/inversify';
 import { ControllerConfig, ModuleConfig } from '../typings/config';
 
-export function Module<
+export function module<
   X extends new() => unknown,
-  Y extends AOPService<X>,
-  Z extends AOPModule>(config: {
-  modules?: Array<typeof AOPModule>;
-  controller?: new () => AOPController<Y>;
+  Y extends Service<X>,
+  Z extends Module>(config: {
+  modules?: Array<typeof Module>;
+  controller?: new () => Controller<Y>;
   service?: new () => Y;
   model?: X;
 } = {}): (Target: new () => Z) => void {
@@ -21,7 +21,7 @@ export function Module<
       ParentServiceClasses.push(CurrentModuleConfig.service);
     }
     if (CurrentModuleConfig.modules) {
-      CurrentModuleConfig.modules.forEach((each: typeof AOPModule & {
+      CurrentModuleConfig.modules.forEach((each: typeof Module & {
         loadContainer?(ParentServiceClasses: Array<unknown>): void;
       }) => each.loadContainer([...ParentServiceClasses]));
     }

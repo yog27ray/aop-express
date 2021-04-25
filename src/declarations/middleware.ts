@@ -1,12 +1,12 @@
 import { injectable } from 'inversify';
 import { MiddlewareRequest } from '../typings/request-response-type';
-import { AOPService } from './a-o-p-service';
 import { Base } from './base';
 import { providerContainer, serviceContainer } from './inversify';
+import { Service } from './service';
 
 @injectable()
-export abstract class AOPMiddleware extends Base {
-  protected getService<T extends AOPService>(table: new () => T): T {
+export abstract class Middleware extends Base {
+  protected getService<T extends Service>(table: new () => T): T {
     return serviceContainer.get(table);
   }
 

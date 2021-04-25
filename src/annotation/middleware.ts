@@ -1,9 +1,9 @@
 import { injectable } from 'inversify';
-import { AOPMiddleware } from '../declarations';
+import { Middleware } from '../declarations';
 import { middlewareContainer } from '../declarations/inversify';
 
-export function Middleware(): (target: new () => AOPMiddleware) => void {
-  return function decorator(target: new () => AOPMiddleware): void {
+export function middleware(): (target: new () => Middleware) => void {
+  return function decorator(target: new () => Middleware): void {
     injectable()(target);
     middlewareContainer.bind(target).to(target).inSingletonScope();
   };

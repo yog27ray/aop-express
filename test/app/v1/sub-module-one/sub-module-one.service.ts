@@ -1,9 +1,9 @@
-import { AOPService, Service } from '../../../../src';
+import { Service, service } from '../../../../src';
 import { CustomOneProvider } from '../../../provider/custom-one.provider';
 import { MainService } from '../../main.service';
 
-@Service()
-export class SubModuleOneService extends AOPService {
+@service()
+export class SubModuleOneService extends Service {
   mainService: MainService = this.getService(MainService);
   customOneProvider: CustomOneProvider = this.getProvider(CustomOneProvider);
 

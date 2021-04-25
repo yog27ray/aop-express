@@ -1,7 +1,7 @@
-import { AOPService, Service } from '../../src';
+import { Service, service } from '../../src';
 
-@Service()
-export class MainService extends AOPService {
+@service()
+export class MainService extends Service {
   testMethod(): string {
     return 'success';
   }

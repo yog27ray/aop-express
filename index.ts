@@ -1,19 +1,19 @@
 import {
-  AOPApplication, AOPController, AOPMiddleware,
-  AOPModule,
-  AOPProvider,
-  AOPRequest, AOPResponse, AOPService, Application,
-  Base, Controller,
+  Application, Controller, Middleware,
+  Module,
+  Provider,
+  AOPRequest, AOPResponse, Service, application,
+  Base, controller,
   DELETE,
-  GET, Middleware, MiddlewareRequest, Module, POST, Provider, PUT, Service,
+  GET, middleware, MiddlewareRequest, module, POST, provider, PUT, service,
 } from './src';
 
 export {
-  AOPApplication, AOPController, AOPMiddleware,
-  AOPModule,
-  AOPProvider,
-  AOPRequest, AOPResponse, AOPService, Application,
-  Base, Controller,
+  Application, Controller, Middleware,
+  Module,
+  Provider,
+  AOPRequest, AOPResponse, Service, application,
+  Base, controller,
   DELETE,
-  GET, Middleware, MiddlewareRequest, Module, POST, Provider, PUT, Service,
+  GET, middleware, MiddlewareRequest, module, POST, provider, PUT, service,
 };

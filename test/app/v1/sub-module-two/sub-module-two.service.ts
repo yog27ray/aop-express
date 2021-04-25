@@ -1,9 +1,9 @@
-import { AOPService, Service } from '../../../../src';
+import { Service, service } from '../../../../src';
 import { MainService } from '../../main.service';
 import { SubModuleTwoModel } from './sub-module-two.model';
 
-@Service()
-export class SubModuleTwoService extends AOPService<typeof SubModuleTwoModel> {
+@service()
+export class SubModuleTwoService extends Service<typeof SubModuleTwoModel> {
   mainService: MainService = this.getService(MainService);
 
   testMethodCall(): string {

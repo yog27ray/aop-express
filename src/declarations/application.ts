@@ -4,37 +4,38 @@
 import express, { Express } from 'express';
 import * as http from 'http';
 import { createMiddlewareHandler } from '../annotation/route';
-import { ApplicationType } from '../typings/annotation';
-import { ControllerConfig, ModuleConfig } from '../typings/config';
+import { ApplicationConfig, ControllerConfig, ModuleConfig } from '../typings/config';
 import { RouteType } from '../typings/route';
-import { AOPController } from './a-o-p-controller';
-import { AOPMiddleware } from './a-o-p-middleware';
 import { Base } from './base';
 import { getConfig } from './class-config';
+import { Controller } from './controller';
 import { controllerContainer, providerContainer } from './inversify';
+import { Middleware } from './middleware';
 
-export class AOPApplication extends Base {
-  static app: Express;
-  static server: http.Server;
-  static config: ApplicationType;
-
+export class Application extends Base {
   constructor() {
     super();
-    this.beforeRouteRegistration(AOPApplication.app);
-    if (AOPApplication.config.module) {
-      const MainModule = AOPApplication.config.module as { aopId?: string, loadContainer?(): void; };
+    const applicationConfig = getConfig((this.constructor as { aopId?: string }).aopId) as (
+      ApplicationConfig & { app: Express; server: http.Server });
+    this.beforeRouteRegistration(applicationConfig.app);
+    if (applicationConfig.module) {
+      const MainModule = applicationConfig.module as { aopId?: string, loadContainer?(): void; };
       MainModule.loadContainer();
       const MainModuleConfig: ModuleConfig = getConfig(MainModule.aopId);
       const routes = this.generateControllerRoutes(MainModuleConfig.controller);
-      this.registerApplicationRoutes(AOPApplication.app, routes);
-      this.afterRouteRegistration(AOPApplication.app);
+      this.registerApplicationRoutes(applicationConfig.app, routes);
+      this.afterRouteRegistration(applicationConfig.app);
     }
-    this.startServer();
+    this.startServer(applicationConfig);
   }
 
   beforeRouteRegistration(app: Express): void {}
 
   afterRouteRegistration(app: Express): void {}
+
+  get app(): Express {
+    return (getConfig((this.constructor as { aopId?: string }).aopId) as { app: Express }).app;
+  }
 
   protected getProvider<T>(table: new () => T): T {
     return providerContainer.get(table);
@@ -46,21 +47,21 @@ export class AOPApplication extends Base {
       const method = each.method || 'use';
       const router = express.Router();
       router[method.toLowerCase().trim()](path, ...middleware);
-      app.use(AOPApplication.config.pathPrefix || '', router);
+      // app.use(Application.config.pathPrefix || '', router);
     });
   }
 
-  private startServer(): void {
-    AOPApplication.server.listen(AOPApplication.config.port, AOPApplication.config.ip, () => {
+  private startServer(applicationConfig: ApplicationConfig & { app: Express; server: http.Server }): void {
+    applicationConfig.server.listen(applicationConfig.port, applicationConfig.ip, () => {
       // eslint-disable-next-line no-console
-      console.log('Express server listening on %d, listening on "%s"', AOPApplication.config.port, AOPApplication.config.ip);
+      console.log('Express server listening on %d, listening on "%s"', applicationConfig.port, applicationConfig.ip);
     });
   }
 
-  private generateControllerRoutes(CurrentController: typeof AOPController & { aopId?: string }): Array<RouteType> {
+  private generateControllerRoutes(CurrentController: typeof Controller & { aopId?: string }): Array<RouteType> {
     const routes: Array<RouteType> = [];
-    const controller: AOPController & {
-      routes?: Array<RouteType & { middlewareClass?: Array<new () => AOPMiddleware> }>;
+    const controller: Controller & {
+      routes?: Array<RouteType & { middlewareClass?: Array<new () => Middleware> }>;
     } = controllerContainer.get(CurrentController);
     const controllerRoutes = controller.routes || [];
     routes.push(...controllerRoutes.map((controllerRoute) => {
@@ -76,7 +77,7 @@ export class AOPApplication extends Base {
     const CurrentControllerConfig: ControllerConfig = getConfig(CurrentController.aopId);
     const controllerClassRoutes = CurrentControllerConfig.routes || [];
     const controllerClassMiddlewares = CurrentControllerConfig.middleware || [];
-    const childrenRoutes = controllerClassRoutes.map((controllerClassRoute: { path: string; child: typeof AOPController}) => {
+    const childrenRoutes = controllerClassRoutes.map((controllerClassRoute: { path: string; child: typeof Controller}) => {
       const subRoutes = this.generateControllerRoutes(controllerClassRoute.child);
       return subRoutes.map((subRoute: RouteType): RouteType => ({
         method: subRoute.method,

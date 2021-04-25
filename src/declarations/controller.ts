@@ -1,12 +1,12 @@
 import { injectable } from 'inversify';
 import { ModuleConfig } from '../typings/config';
-import { AOPService } from './a-o-p-service';
+import { Service } from './service';
 import { Base } from './base';
 import { getConfig } from './class-config';
 import { serviceContainer } from './inversify';
 
 @injectable()
-export class AOPController<T extends AOPService = AOPService> extends Base {
+export class Controller<T extends Service = Service> extends Base {
   private readonly _service: T;
   constructor() {
     super();

@@ -1,5 +1,5 @@
 import { NextFunction, RequestHandler, Response } from 'express';
-import { AOPController, AOPMiddleware } from '../declarations';
+import { Controller, Middleware } from '../declarations';
 import { middlewareContainer } from '../declarations/inversify';
 import { AOPRequest, AOPResponse, MiddlewareRequest, RouteConfig } from '../typings/request-response-type';
 import { RouteType } from '../typings/route';
@@ -17,9 +17,9 @@ function handleErrorResponse(response: Response, error: Error & { code?: number 
   response.status(typeof error.code === 'number' ? error.code : 400).send({ message });
 }
 
-export function createMiddlewareHandler(ClassMiddlewares: Array<new () => AOPMiddleware>): Array<RequestHandler> {
+export function createMiddlewareHandler(ClassMiddlewares: Array<new () => Middleware>): Array<RequestHandler> {
   return ClassMiddlewares.map((ClassMiddleware) => {
-    const controllerClassMiddleware = middlewareContainer.get<AOPMiddleware>(ClassMiddleware);
+    const controllerClassMiddleware = middlewareContainer.get<Middleware>(ClassMiddleware);
     return (request: MiddlewareRequest, response: Response, next: NextFunction): void => {
       addMiddlewareData(request);
       controllerClassMiddleware.requestHandler(request)
@@ -32,7 +32,7 @@ export function createMiddlewareHandler(ClassMiddlewares: Array<new () => AOPMid
 declare type RequestPropertyDescriptor = TypedPropertyDescriptor<(params?: AOPRequest) => Promise<AOPResponse>>;
 
 function createRequestHandler(
-  target_: AOPController & { routes?: Array<RouteType & { middlewareClass?: Array<new () => AOPMiddleware> }> },
+  target_: Controller & { routes?: Array<RouteType & { middlewareClass?: Array<new () => Middleware> }> },
   requestMethod: 'get' | 'put' | 'delete' | 'post',
   path: string,
   classMethod: string,
@@ -69,7 +69,7 @@ function createRequestHandler(
 
 function GET(path: string, routeConfig: RouteConfig = {}): (...args: Array<unknown>) => RequestPropertyDescriptor {
   return function decorator(
-    target: AOPController & { routes?: Array<RouteType> },
+    target: Controller & { routes?: Array<RouteType> },
     classMethod: string,
     propertyDescriptor: RequestPropertyDescriptor): RequestPropertyDescriptor {
     return createRequestHandler(target, 'get', path, classMethod, routeConfig, propertyDescriptor);
@@ -78,7 +78,7 @@ function GET(path: string, routeConfig: RouteConfig = {}): (...args: Array<unkno
 
 function POST(path: string, routeConfig: RouteConfig = {}): (...args: Array<unknown>) => RequestPropertyDescriptor {
   return function decorator(
-    target: AOPController & { routes?: Array<RouteType> },
+    target: Controller & { routes?: Array<RouteType> },
     classMethod_: string,
     propertyDescriptor: RequestPropertyDescriptor): RequestPropertyDescriptor {
     return createRequestHandler(target, 'post', path, classMethod_, routeConfig, propertyDescriptor);
@@ -87,7 +87,7 @@ function POST(path: string, routeConfig: RouteConfig = {}): (...args: Array<unkn
 
 function PUT(path: string, routeConfig: RouteConfig = {}): (...args: Array<unknown>) => RequestPropertyDescriptor {
   return function decorator(
-    target: AOPController & { routes?: Array<RouteType> },
+    target: Controller & { routes?: Array<RouteType> },
     classMethod_: string,
     propertyDescriptor: RequestPropertyDescriptor): RequestPropertyDescriptor {
     return createRequestHandler(target, 'put', path, classMethod_, routeConfig, propertyDescriptor);
@@ -96,7 +96,7 @@ function PUT(path: string, routeConfig: RouteConfig = {}): (...args: Array<unkno
 
 function DELETE(path: string, routeConfig: RouteConfig = {}): (...args: Array<unknown>) => RequestPropertyDescriptor {
   return function decorator(
-    target: AOPController & { routes?: Array<RouteType> },
+    target: Controller & { routes?: Array<RouteType> },
     classMethod_: string,
     propertyDescriptor: RequestPropertyDescriptor): RequestPropertyDescriptor {
     return createRequestHandler(target, 'delete', path, classMethod_, routeConfig, propertyDescriptor);
