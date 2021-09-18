@@ -4,6 +4,7 @@ import { factory } from './factory';
 import { middleware } from './middleware';
 import { module } from './module';
 import { provider } from './provider';
+import { table } from './table';
 import { DELETE, GET, POST, PUT } from './route';
 import { service } from './service';
 
@@ -19,4 +20,5 @@ export {
   POST,
   PUT,
   service,
+  table,
 };

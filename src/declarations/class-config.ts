@@ -9,7 +9,12 @@ function setConfig(config: { [key: string]: unknown }): string {
 }
 
 function getConfig(id: string): { [key: string]: unknown } {
-  return classConfig[id];
+  return classConfig[id] || {};
 }
 
-export { setConfig, getConfig };
+function addToConfig(configName: string, params: { [key: string]: unknown }): void {
+  const config = getConfig(configName);
+  classConfig[configName] = { ...config, ...params };
+}
+
+export { setConfig, getConfig, addToConfig };

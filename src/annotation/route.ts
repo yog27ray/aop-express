@@ -32,9 +32,13 @@ export function createMiddlewareHandler(ClassMiddlewares: Array<new () => Middle
   return ClassMiddlewares.map((ClassMiddleware) => {
     const controllerClassMiddleware = middlewareContainer.get<Middleware>(ClassMiddleware);
     return (request: Request, response: Response, next: NextFunction): void => {
-      controllerClassMiddleware.requestHandler(getRouteRequestFromRequest(request))
-        .then(next)
-        .catch((error) => handleErrorResponse(response, error));
+      try {
+        controllerClassMiddleware.requestHandler(getRouteRequestFromRequest(request))
+          .then(next)
+          .catch((error) => handleErrorResponse(response, error));
+      } catch (error) {
+        handleErrorResponse(response, error);
+      }
     };
   });
 }
@@ -62,9 +66,13 @@ function createRequestHandler(
   });
   Object.assign(target, {
     [handlerMethod](request: Request, response: Response): void {
-      this[classMethod](getRouteRequestFromRequest(request))
-        .then((result: RouteResponse) => response.status(result.code || 200).json(result.response))
-        .catch((error) => handleErrorResponse(response, error));
+      try {
+        this[classMethod](getRouteRequestFromRequest(request))
+          .then((result: RouteResponse) => response.status(result.code || 200).json(result.response))
+          .catch((error) => handleErrorResponse(response, error));
+      } catch (error) {
+        handleErrorResponse(response, error);
+      }
     },
   });
   return propertyDescriptor;

@@ -7,9 +7,7 @@ export class SubModuleOneService extends Service {
   mainService: MainService = this.getService(MainService);
   customOneProvider: CustomOneProvider = this.getProvider(CustomOneProvider);
 
-  constructor() {
-    super();
-    console.log('>>>>>>MainServiceCallFromSubModuleOne', this.mainService.testMethod());
-    console.log('>>>>>>ProviderFunctionCall', this.customOneProvider.testMethodCall());
+  providerCall(): string {
+    return `SubModuleOneServiceMethodCall|${this.mainService.testMethod()}|${this.customOneProvider.testMethodCall()}`;
   }
 }

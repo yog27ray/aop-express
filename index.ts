@@ -5,7 +5,9 @@ import {
   DELETE,
   factory, Factory, GET, Middleware, middleware,
   Module, module,
-  POST, Provider, provider, PUT, RouteRequest, RouteResponse, Service, service,
+  POST,
+  Provider,
+  provider, PUT, RouteRequest, RouteResponse, Service, service, table, Table,
 } from './src';
 
 export {
@@ -15,5 +17,7 @@ export {
   DELETE,
   factory, Factory, GET, Middleware, middleware,
   Module, module,
-  POST, Provider, provider, PUT, RouteRequest, RouteResponse, Service, service,
+  POST,
+  Provider,
+  provider, PUT, RouteRequest, RouteResponse, Service, service, table, Table,
 };

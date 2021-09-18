@@ -3,6 +3,8 @@ import { Middleware } from '../declarations';
 
 interface ParsedQs { [key: string]: undefined | string | Array<string> | ParsedQs | Array<ParsedQs>; }
 
+export declare interface KeyValue<T = unknown> { [key: string]: T; }
+
 export declare interface RouteRequest {
   query: ParsedQs;
   params: Record<string, string>;

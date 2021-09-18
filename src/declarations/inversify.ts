@@ -5,8 +5,9 @@ const serviceContainer = new Container({});
 const factoryContainer = new Container({});
 const providerContainer = new Container({});
 const controllerContainer = new Container({});
-const modelContainer = new Container({});
 const middlewareContainer = new Container({});
+const tableContainer = new Container({});
+const adapterContainer = new Container({});
 
 function loadInConstantContainer(container: Container, target: new () => Base): void {
   if (!target) {
@@ -18,7 +19,7 @@ function loadInConstantContainer(container: Container, target: new () => Base): 
   container.bind(target).toConstantValue(target);
 }
 
-function loadInContainer(container: Container, target: (new () => Base) & { aopId?: string }): void {
+function loadInContainer(container: Container, target: (new (arg?: unknown) => Base) & { aopId?: string }): void {
   if (!target) {
     return;
   }
@@ -34,7 +35,8 @@ export {
   factoryContainer,
   serviceContainer,
   controllerContainer,
-  modelContainer,
   middlewareContainer,
   providerContainer,
+  tableContainer,
+  adapterContainer,
 };
