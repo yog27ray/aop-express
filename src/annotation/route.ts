@@ -37,7 +37,7 @@ export function createMiddlewareHandler(ClassMiddlewares: Array<new () => Middle
           .then(next)
           .catch((error) => handleErrorResponse(response, error));
       } catch (error) {
-        handleErrorResponse(response, error);
+        handleErrorResponse(response, error as Error);
       }
     };
   });
@@ -71,7 +71,7 @@ function createRequestHandler(
           .then((result: RouteResponse) => response.status(result.code || 200).json(result.response))
           .catch((error) => handleErrorResponse(response, error));
       } catch (error) {
-        handleErrorResponse(response, error);
+        handleErrorResponse(response, error as Error);
       }
     },
   });

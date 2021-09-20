@@ -1,22 +1,14 @@
-import { Table } from '../declarations';
-import { PartialClassAttribute } from '../typings/class-type';
+import { KeyValue } from '../typings/request-response-type';
 
 export abstract class StorageAdapter {
-  abstract count<T extends Table>(
-    ModelClass: new(attributes: unknown) => T,
+  abstract count(tableName: string, where: Record<string, unknown>, option: { skip?: number; }): Promise<number>;
+  abstract find(
+    tableName: string,
     where: Record<string, unknown>,
-    option: { limit?: number; skip?: number; sort?: { [key: string]: number } }): Promise<number>;
-  abstract find<T extends Table>(
-    ModelClass: new(attributes: unknown) => T,
-    where: Record<string, unknown>,
-    option: { limit?: number; skip?: number; sort?: { [key: string]: number } }): Promise<Array<T>>;
-  abstract findOne<T extends Table>(
-    ModelClass: new(attributes: unknown) => T,
-    where: Record<string, unknown>,
-    { skip, sort, limit }: { limit?: number; skip?: number; sort?: { [key: string]: number } }): Promise<T>;
+    option: { limit?: number; skip?: number; sort?: { [key: string]: number } }): Promise<Array<KeyValue>>;
+  abstract findOne(tableName: string, where: Record<string, unknown>, { skip, sort }?: { skip?: number; sort?: { [key: string]: number } })
+    : Promise<KeyValue>;
   abstract create(tableName: string, data: Record<string, unknown>): Promise<string>;
-  abstract update<T extends Table>(
-    ModelClass: new(attributes: unknown) => T,
-    id: string,
-    data: PartialClassAttribute<T>): Promise<void>;
+  abstract update(tableName: string, id: string, data: Record<string, unknown>): Promise<void>;
+  abstract deleteOne(tableName: string, where: KeyValue): Promise<void>;
 }

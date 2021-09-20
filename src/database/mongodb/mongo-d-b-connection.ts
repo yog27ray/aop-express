@@ -18,7 +18,7 @@ class MongoDBConnection {
   }
 
   isConnected(): boolean {
-    return !!this.client && this.client.isConnected();
+    return !!this.client;
   }
 
   async connect(): Promise<any> {
@@ -39,7 +39,7 @@ class MongoDBConnection {
   async find(
     tableName: string,
     query_: any = {},
-    option: { limit?: number; skip?: number; sort?: { [key: string]: number } }): Promise<Array<any>> {
+    option: { limit?: number; skip?: number; sort?: { [key: string]: 1 | -1 } }): Promise<Array<any>> {
     await this.connect();
     const query = query_;
     if (query.id) {
@@ -52,7 +52,7 @@ class MongoDBConnection {
   async findOne(
     tableName: string,
     filter_: Record<string, unknown> = {},
-    option: { limit?: number; skip?: number; sort?: { [key: string]: number } }): Promise<Record<string, unknown>> {
+    option: { limit?: number; skip?: number; sort?: { [key: string]: 1 | -1 } }): Promise<Record<string, unknown>> {
     const filter = filter_;
     await this.connect();
     if (filter.id) {
@@ -67,7 +67,7 @@ class MongoDBConnection {
       return Promise.resolve();
     }
     await this.connect();
-    return new Promise((resolve: (item: { [key: string]: any }) => void, reject: (error: Error) => void) => {
+    return new Promise((resolve: (item: boolean) => void, reject: (error: Error) => void) => {
       this.getDB().dropDatabase((error, result) => {
         if (error) {
           reject(error);
@@ -78,7 +78,7 @@ class MongoDBConnection {
     });
   }
 
-  async insert(collectionName: string, item_: Record<string, unknown> & { id?: string; _id?: string }): Promise<string> {
+  async insert(collectionName: string, item_: { [key: string]: string }): Promise<string> {
     await this.connect();
     const item = item_;
     if (item.id) {
@@ -86,7 +86,7 @@ class MongoDBConnection {
       delete item.id;
     }
     const newDocument = await this.getDB().collection(collectionName).insertOne(item);
-    return newDocument.insertedId as string;
+    return newDocument.insertedId.toString();
   }
 
   async update(collectionName: string, documentId: string, document: { [key: string]: any }): Promise<void> {

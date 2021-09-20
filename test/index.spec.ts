@@ -1,5 +1,6 @@
 import { expect } from 'chai';
 import fetch from 'node-fetch';
+import { dropDB } from './setup';
 import { TestTable } from './table/test-table';
 
 describe('Server', () => {
@@ -86,11 +87,58 @@ describe('Server', () => {
     });
   });
 
-  context('Database', () => {
-    it('should perform database actions', async () => {
-      const testTable = new TestTable({ variable: 123 });
+  context('Database CRUD without ACL', () => {
+    let testTable: TestTable;
+    before(() => dropDB());
+
+    it('should create new object', async () => {
+      testTable = new TestTable({ variable: 123 });
       testTable.set('variable', 2);
       await testTable.save();
+      expect(testTable.createdAt).to.exist;
+      expect(testTable.updatedAt).to.exist;
+      expect(testTable.updatedAt.toISOString()).to.equal(testTable.createdAt.toISOString());
+      expect(testTable.id).to.exist;
+      expect(testTable.get('variable')).to.equal(2);
+    });
+
+    it('should find object by Id', async () => {
+      const emptyTable = new TestTable();
+      emptyTable.id = testTable.id;
+      await emptyTable.fetch();
+      expect(emptyTable.updatedAt.toISOString()).to.equal(testTable.updatedAt.toISOString());
+      expect(emptyTable.createdAt.toISOString()).to.equal(testTable.createdAt.toISOString());
+      expect(emptyTable.id).to.equal(testTable.id);
+      expect(emptyTable.get('variable')).to.equal(testTable.get('variable'));
+    });
+
+    it('should find items', async () => {
+      const items = await TestTable.find();
+      expect(items.length).to.equal(1);
+      expect(items[0].updatedAt.toISOString()).to.equal(testTable.updatedAt.toISOString());
+      expect(items[0].createdAt.toISOString()).to.equal(testTable.createdAt.toISOString());
+      expect(items[0].id).to.equal(testTable.id);
+      expect(items[0].get('variable')).to.equal(testTable.get('variable'));
+    });
+
+    it('should count items', async () => {
+      const result = await TestTable.count();
+      expect(result).to.equal(1);
+    });
+
+    it('should update same object', async () => {
+      await testTable.save({ variable: 4 });
+      expect(testTable.get('variable')).to.equal(4);
+      expect(testTable.createdAt).to.exist;
+      expect(testTable.updatedAt).to.exist;
+      expect(testTable.updatedAt.valueOf()).to.greaterThan(testTable.createdAt.valueOf());
+      expect(testTable.id).to.exist;
+    });
+
+    it('should delete item', async () => {
+      await testTable.destroy();
+      const items = await TestTable.find();
+      expect(items.length).to.equal(0);
     });
   });
 });

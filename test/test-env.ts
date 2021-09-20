@@ -1,5 +1,5 @@
 const TestEnv = {
-  MongoURI: '',
+  MongoURI: 'mongodb://localhost:27017/aop-express',
   port: 1234,
 };
 

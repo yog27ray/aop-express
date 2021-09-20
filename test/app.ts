@@ -1,3 +1,4 @@
+import bodyParser from 'body-parser';
 import { Express } from 'express';
 import morgan from 'morgan';
 // tslint:disable-next-line:no-import-side-effect
@@ -17,6 +18,7 @@ import { TestEnv } from './test-env';
 class App extends Application {
   beforeRouteRegistration(app: Express): void {
     app.use(morgan('dev'));
+    app.use(bodyParser.json());
   }
 }
 
