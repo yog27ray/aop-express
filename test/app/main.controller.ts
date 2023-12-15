@@ -1,4 +1,4 @@
-import { Controller, AOPResponse, controller, GET } from '../../src';
+import { AOPResponse, Controller, controller, GET } from '../../src';
 import { MainService } from './main.service';
 import { V1Controller } from './v1/v1.controller';
 
