@@ -1,8 +1,8 @@
 import { RequestHandler } from 'express';
 import { Middleware } from '../declarations';
-import { RouteConfig, RouteRequest, RouteResponse } from '../typings/request-response-type';
+import { AOPRequest, AOPResponse, RouteConfig } from '../typings/request-response-type';
 export declare function createMiddlewareHandler(ClassMiddlewares: Array<new () => Middleware>): Array<RequestHandler>;
-declare type RequestPropertyDescriptor = TypedPropertyDescriptor<(params?: RouteRequest) => Promise<RouteResponse>>;
+declare type RequestPropertyDescriptor = TypedPropertyDescriptor<(params?: AOPRequest) => Promise<AOPResponse>>;
 declare function GET(path: string, routeConfig?: RouteConfig): (...args: Array<unknown>) => RequestPropertyDescriptor;
 declare function POST(path: string, routeConfig?: RouteConfig): (...args: Array<unknown>) => RequestPropertyDescriptor;
 declare function PUT(path: string, routeConfig?: RouteConfig): (...args: Array<unknown>) => RequestPropertyDescriptor;

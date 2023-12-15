@@ -22,6 +22,9 @@ let Service = class Service extends base_1.Base {
             this._model = inversify_2.modelContainer.get(serviceConfig.model);
         }
     }
+    getFactory(table) {
+        return inversify_2.factoryContainer.get(table);
+    }
     getService(table) {
         return class_config_1.getConfig(this.constructor.aopId).container.get(table);
     }

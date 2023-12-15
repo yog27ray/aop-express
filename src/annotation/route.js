@@ -3,30 +3,21 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.DELETE = exports.PUT = exports.POST = exports.GET = exports.createMiddlewareHandler = void 0;
 const inversify_1 = require("../declarations/inversify");
 const ExpressFunctionPrefix = 'express_';
-function addRequestContext(request) {
-    if (!request.context) {
-        request.context = {};
+function addMiddlewareData(request) {
+    if (!request.middlewareData) {
+        request.middlewareData = {};
     }
 }
 function handleErrorResponse(response, error) {
     const { message } = error;
     response.status(typeof error.code === 'number' ? error.code : 400).send({ message });
 }
-function getRouteRequestFromRequest(request) {
-    addRequestContext(request);
-    return {
-        query: request.query,
-        params: request.params,
-        headers: request.headers,
-        body: request.body,
-        context: request.context,
-    };
-}
 function createMiddlewareHandler(ClassMiddlewares) {
     return ClassMiddlewares.map((ClassMiddleware) => {
         const controllerClassMiddleware = inversify_1.middlewareContainer.get(ClassMiddleware);
         return (request, response, next) => {
-            controllerClassMiddleware.requestHandler(getRouteRequestFromRequest(request))
+            addMiddlewareData(request);
+            controllerClassMiddleware.requestHandler(request)
                 .then(next)
                 .catch((error) => handleErrorResponse(response, error));
         };
@@ -48,7 +39,14 @@ function createRequestHandler(target_, requestMethod, path, classMethod, routeCo
     });
     Object.assign(target, {
         [handlerMethod](request, response) {
-            this[classMethod](getRouteRequestFromRequest(request))
+            addMiddlewareData(request);
+            this[classMethod]({
+                middlewareData: request.middlewareData,
+                query: request.query,
+                params: request.params,
+                headers: request.headers,
+                body: request.body,
+            })
                 .then((result) => response.status(result.code || 200).json(result.response))
                 .catch((error) => handleErrorResponse(response, error));
         },
