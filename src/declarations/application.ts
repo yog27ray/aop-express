@@ -36,6 +36,7 @@ export class Application extends Base {
   beforeRouteRegistration(app: Express): void {}
 
   afterRouteRegistration(app: Express): void {}
+  afterServerStart(): void {}
 
   protected getProvider<T>(table: new () => T): T {
     return providerContainer.get(table);
@@ -55,6 +56,7 @@ export class Application extends Base {
     applicationConfig.server.listen(applicationConfig.port, applicationConfig.ip, () => {
       // eslint-disable-next-line no-console
       console.log('Express server listening on %d, listening on "%s"', applicationConfig.port, applicationConfig.ip);
+      this.afterServerStart();
     });
   }
 
