@@ -37,7 +37,7 @@
   "homepage": "https://github.com/yog27ray/aop-express#readme",
   "dependencies": {
     "inversify": "^5.0.5",
-    "reflect-metadata": "^0.1.13",
+    "reflect-metadata": "^0.2.1",
     "uuid": "^8.3.2"
   }
 }
