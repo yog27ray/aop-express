@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { Service, service } from '../../../../src';
 import { MainService } from '../../main.service';
 import { SubModuleTwoModel } from './sub-module-two.model';

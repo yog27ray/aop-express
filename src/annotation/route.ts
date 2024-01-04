@@ -24,7 +24,7 @@ export function createMiddlewareHandler(ClassMiddlewares: Array<new () => Middle
       addMiddlewareData(request);
       controllerClassMiddleware.requestHandler(request)
         .then(next)
-        .catch((error) => handleErrorResponse(response, error));
+        .catch((error) => handleErrorResponse(response, error as Error));
     };
   });
 }
@@ -61,7 +61,7 @@ function createRequestHandler(
         body: request.body,
       })
         .then((result: AOPResponse) => response.status(result.code || 200).json(result.response))
-        .catch((error) => handleErrorResponse(response, error));
+        .catch((error) => handleErrorResponse(response, error as Error));
     },
   });
   return propertyDescriptor;
