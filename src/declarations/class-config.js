@@ -4,7 +4,7 @@ exports.getConfig = exports.setConfig = void 0;
 const uuid_1 = require("uuid");
 const classConfig = {};
 function setConfig(config) {
-    const id = uuid_1.v4();
+    const id = (0, uuid_1.v4)();
     classConfig[id] = { ...config };
     return id;
 }

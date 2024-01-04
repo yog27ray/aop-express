@@ -17,7 +17,7 @@ const inversify_2 = require("./inversify");
 let Service = class Service extends base_1.Base {
     constructor() {
         super();
-        const serviceConfig = class_config_1.getConfig(this.constructor.aopId);
+        const serviceConfig = (0, class_config_1.getConfig)(this.constructor.aopId);
         if (serviceConfig === null || serviceConfig === void 0 ? void 0 : serviceConfig.model) {
             this._model = inversify_2.modelContainer.get(serviceConfig.model);
         }
@@ -26,7 +26,7 @@ let Service = class Service extends base_1.Base {
         return inversify_2.factoryContainer.get(table);
     }
     getService(table) {
-        return class_config_1.getConfig(this.constructor.aopId).container.get(table);
+        return (0, class_config_1.getConfig)(this.constructor.aopId).container.get(table);
     }
     getProvider(table) {
         return inversify_2.providerContainer.get(table);
@@ -35,9 +35,9 @@ let Service = class Service extends base_1.Base {
         return this._model;
     }
 };
-Service = __decorate([
-    inversify_1.injectable(),
+exports.Service = Service;
+exports.Service = Service = __decorate([
+    (0, inversify_1.injectable)(),
     __metadata("design:paramtypes", [])
 ], Service);
-exports.Service = Service;
 //# sourceMappingURL=service.js.map

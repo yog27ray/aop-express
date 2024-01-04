@@ -4,9 +4,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Application = void 0;
-/* tslint:disable:no-empty max-line-length */
-// eslint-disable-next-line max-len
-/* eslint-disable @typescript-eslint/no-unused-vars,@typescript-eslint/no-unused-vars-experimental,@typescript-eslint/no-empty-function,no-unused-vars */
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* tslint:disable:no-empty */
 const express_1 = __importDefault(require("express"));
 const route_1 = require("../annotation/route");
 const base_1 = require("./base");
@@ -14,16 +13,16 @@ const class_config_1 = require("./class-config");
 const inversify_1 = require("./inversify");
 class Application extends base_1.Base {
     static getApp() {
-        return class_config_1.getConfig(this.aopId).app;
+        return (0, class_config_1.getConfig)(this.aopId).app;
     }
     constructor() {
         super();
-        const applicationConfig = class_config_1.getConfig(this.constructor.aopId);
+        const applicationConfig = (0, class_config_1.getConfig)(this.constructor.aopId);
         this.beforeRouteRegistration(applicationConfig.app);
         if (applicationConfig.module) {
             const MainModule = applicationConfig.module;
             MainModule.loadContainer();
-            const MainModuleConfig = class_config_1.getConfig(MainModule.aopId);
+            const MainModuleConfig = (0, class_config_1.getConfig)(MainModule.aopId);
             const routes = this.generateControllerRoutes(MainModuleConfig.controller);
             this.registerApplicationRoutes(applicationConfig.app, routes, applicationConfig.pathPrefix);
             this.afterRouteRegistration(applicationConfig.app);
@@ -32,6 +31,7 @@ class Application extends base_1.Base {
     }
     beforeRouteRegistration(app) { }
     afterRouteRegistration(app) { }
+    afterServerStart() { }
     getProvider(table) {
         return inversify_1.providerContainer.get(table);
     }
@@ -48,6 +48,7 @@ class Application extends base_1.Base {
         applicationConfig.server.listen(applicationConfig.port, applicationConfig.ip, () => {
             // eslint-disable-next-line no-console
             console.log('Express server listening on %d, listening on "%s"', applicationConfig.port, applicationConfig.ip);
+            this.afterServerStart();
         });
     }
     generateControllerRoutes(CurrentController) {
@@ -56,15 +57,17 @@ class Application extends base_1.Base {
         const controllerRoutes = controller.routes || [];
         routes.push(...controllerRoutes.map((controllerRoute) => {
             if (controllerRoute.middlewareClass) {
-                controllerRoute.middleware.push(...route_1.createMiddlewareHandler(controllerRoute.middlewareClass));
+                controllerRoute.middleware.push(...(0, route_1.createMiddlewareHandler)(controllerRoute.middlewareClass));
             }
             return {
                 method: controllerRoute.method,
                 path: controllerRoute.path,
-                middleware: [...controllerRoute.middleware, (...args) => controller[controllerRoute.classMethod](...args)],
+                middleware: [...controllerRoute.middleware, (...args) => {
+                        controller[controllerRoute.classMethod](...args);
+                    }],
             };
         }));
-        const CurrentControllerConfig = class_config_1.getConfig(CurrentController.aopId);
+        const CurrentControllerConfig = (0, class_config_1.getConfig)(CurrentController.aopId);
         const controllerClassRoutes = CurrentControllerConfig.routes || [];
         const controllerClassMiddlewares = CurrentControllerConfig.middleware || [];
         const childrenRoutes = controllerClassRoutes.map((controllerClassRoute) => {
@@ -79,7 +82,7 @@ class Application extends base_1.Base {
         routes.push(...childrenRoutes);
         routes.forEach((route_) => {
             const route = route_;
-            route.middleware = [...route_1.createMiddlewareHandler(controllerClassMiddlewares), ...route.middleware];
+            route.middleware = [...(0, route_1.createMiddlewareHandler)(controllerClassMiddlewares), ...route.middleware];
         });
         return routes;
     }

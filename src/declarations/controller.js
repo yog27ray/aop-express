@@ -17,7 +17,7 @@ const inversify_2 = require("./inversify");
 let Controller = class Controller extends base_1.Base {
     constructor() {
         super();
-        const moduleConfig = class_config_1.getConfig(this.constructor.aopId);
+        const moduleConfig = (0, class_config_1.getConfig)(this.constructor.aopId);
         if (moduleConfig.service) {
             this._service = inversify_2.serviceContainer.get(moduleConfig.service);
         }
@@ -26,9 +26,9 @@ let Controller = class Controller extends base_1.Base {
         return this._service;
     }
 };
-Controller = __decorate([
-    inversify_1.injectable(),
+exports.Controller = Controller;
+exports.Controller = Controller = __decorate([
+    (0, inversify_1.injectable)(),
     __metadata("design:paramtypes", [])
 ], Controller);
-exports.Controller = Controller;
 //# sourceMappingURL=controller.js.map

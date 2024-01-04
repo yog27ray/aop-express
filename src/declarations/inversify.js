@@ -19,7 +19,7 @@ function loadInConstantContainer(container, target) {
         return;
     }
     if (!Reflect.hasOwnMetadata('inversify:paramtypes', target)) {
-        inversify_1.injectable()(target);
+        (0, inversify_1.injectable)()(target);
     }
     container.bind(target).toConstantValue(target);
 }
@@ -29,7 +29,7 @@ function loadInContainer(container, target) {
         return;
     }
     if (!Reflect.hasOwnMetadata('inversify:paramtypes', target)) {
-        inversify_1.injectable()(target);
+        (0, inversify_1.injectable)()(target);
     }
     container.bind(target).to(target).inSingletonScope();
 }

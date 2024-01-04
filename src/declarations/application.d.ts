@@ -5,6 +5,7 @@ export declare class Application extends Base {
     constructor();
     beforeRouteRegistration(app: Express): void;
     afterRouteRegistration(app: Express): void;
+    afterServerStart(): void;
     protected getProvider<T>(table: new () => T): T;
     private registerApplicationRoutes;
     private startServer;

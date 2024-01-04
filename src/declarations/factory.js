@@ -11,8 +11,8 @@ const inversify_1 = require("inversify");
 const base_1 = require("./base");
 let Factory = class Factory extends base_1.Base {
 };
-Factory = __decorate([
-    inversify_1.injectable()
-], Factory);
 exports.Factory = Factory;
+exports.Factory = Factory = __decorate([
+    (0, inversify_1.injectable)()
+], Factory);
 //# sourceMappingURL=factory.js.map

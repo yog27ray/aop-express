@@ -1,1 +1,1 @@
-{"version":3,"file":"provider.js","sourceRoot":"","sources":["../../../src/annotation/provider.ts"],"names":[],"mappings":";;;AACA,yDAA+E;AAE/E,SAAgB,QAAQ;IACtB,OAAO,SAAS,SAAS,CAAC,MAAmB;QAC3C,2BAAe,CAAC,6BAAiB,EAAE,MAAM,CAAC,CAAC;IAC7C,CAAC,CAAC;AACJ,CAAC;AAJD,4BAIC"}
+{"version":3,"file":"provider.js","sourceRoot":"","sources":["../../../src/annotation/provider.ts"],"names":[],"mappings":";;;AACA,yDAA+E;AAE/E,SAAgB,QAAQ;IACtB,OAAO,SAAS,SAAS,CAAC,MAAmB;QAC3C,IAAA,2BAAe,EAAC,6BAAiB,EAAE,MAAM,CAAC,CAAC;IAC7C,CAAC,CAAC;AACJ,CAAC;AAJD,4BAIC"}

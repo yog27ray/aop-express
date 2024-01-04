@@ -10,8 +10,8 @@ exports.Base = void 0;
 const inversify_1 = require("inversify");
 let Base = class Base {
 };
-Base = __decorate([
-    inversify_1.injectable()
-], Base);
 exports.Base = Base;
+exports.Base = Base = __decorate([
+    (0, inversify_1.injectable)()
+], Base);
 //# sourceMappingURL=base.js.map

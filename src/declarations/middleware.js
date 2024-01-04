@@ -18,8 +18,8 @@ let Middleware = class Middleware extends base_1.Base {
         return inversify_2.providerContainer.get(table);
     }
 };
-Middleware = __decorate([
-    inversify_1.injectable()
-], Middleware);
 exports.Middleware = Middleware;
+exports.Middleware = Middleware = __decorate([
+    (0, inversify_1.injectable)()
+], Middleware);
 //# sourceMappingURL=middleware.js.map
