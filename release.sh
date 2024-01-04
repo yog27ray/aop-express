@@ -5,7 +5,7 @@ git checkout dist
 rm -r *
 cd ..
 node_modules/eslint/bin/eslint.js  --ext .ts src
-node_modules/typescript/bin/tsc -p ./
+node_modules/typescript/bin/tsc -p ./tsconfig-prod.json
 VERSION=$(npm version patch)
 npm i
 cp package.json ./dist/package.json

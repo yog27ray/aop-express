@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { AOPResponse, Controller, controller, PUT } from '../../../../src';
 import { FirstMiddleware } from '../../../middleware/first.middleware';
 import { SecondMiddleware } from '../../../middleware/second.middleware';

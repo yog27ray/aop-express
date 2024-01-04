@@ -66,6 +66,7 @@
     "no-string-literal": true,
     "no-switch-case-fall-through": false,
     "no-trailing-whitespace": true,
+    "new-cap": ["error", { "newIsCapExceptions": ["GET", "PUT", "POST"] }],
     "one-line": [
       true,
       "check-open-brace",

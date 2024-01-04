@@ -16,7 +16,7 @@ export function module<
   model?: X;
 } = {}): (Target: new () => Z) => void {
   function loadContainer(ParentServiceClasses: Array<unknown> = []): void {
-    const CurrentModuleConfig = getConfig(this.aopId) as ModuleConfig;
+    const CurrentModuleConfig = getConfig(this.aopId as string) as ModuleConfig;
     if (CurrentModuleConfig.service) {
       ParentServiceClasses.push(CurrentModuleConfig.service);
     }

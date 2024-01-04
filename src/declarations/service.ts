@@ -17,15 +17,15 @@ abstract class Service<Z extends new () => unknown = new () => unknown> extends 
   }
 
   protected getFactory<T extends Factory>(table: new () => T): T {
-    return factoryContainer.get(table);
+    return factoryContainer.get(table) as T;
   }
 
   protected getService<T extends Service>(table: new () => T): T {
-    return (getConfig((this.constructor as { aopId?: string }).aopId) as { container?: Container }).container.get(table);
+    return (getConfig((this.constructor as { aopId?: string }).aopId) as { container?: Container }).container.get(table) as T;
   }
 
   protected getProvider<T>(table: new () => T): T {
-    return providerContainer.get(table);
+    return providerContainer.get(table) as T;
   }
 
   protected get Model(): Z {

@@ -1,6 +1,5 @@
-/* tslint:disable:no-empty max-line-length */
-// eslint-disable-next-line max-len
-/* eslint-disable @typescript-eslint/no-unused-vars,@typescript-eslint/no-unused-vars-experimental,@typescript-eslint/no-empty-function,no-unused-vars */
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* tslint:disable:no-empty */
 import express, { Express } from 'express';
 import * as http from 'http';
 import { createMiddlewareHandler } from '../annotation/route';
@@ -37,8 +36,10 @@ export class Application extends Base {
 
   afterRouteRegistration(app: Express): void {}
 
+  afterServerStart(): void {}
+
   protected getProvider<T>(table: new () => T): T {
-    return providerContainer.get(table);
+    return providerContainer.get(table) as T;
   }
 
   private registerApplicationRoutes(app: Express, applicationRoutes: Array<RouteType>, pathPrefix: string): void {
@@ -55,6 +56,7 @@ export class Application extends Base {
     applicationConfig.server.listen(applicationConfig.port, applicationConfig.ip, () => {
       // eslint-disable-next-line no-console
       console.log('Express server listening on %d, listening on "%s"', applicationConfig.port, applicationConfig.ip);
+      this.afterServerStart();
     });
   }
 
@@ -71,7 +73,9 @@ export class Application extends Base {
       return {
         method: controllerRoute.method,
         path: controllerRoute.path,
-        middleware: [...controllerRoute.middleware, (...args: Array<unknown>): void => controller[controllerRoute.classMethod](...args)],
+        middleware: [...controllerRoute.middleware, (...args: Array<unknown>): void => {
+          controller[controllerRoute.classMethod](...args);
+        }],
       };
     }));
     const CurrentControllerConfig: ControllerConfig = getConfig(CurrentController.aopId);
