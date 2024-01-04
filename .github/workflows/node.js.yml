@@ -35,6 +35,6 @@ jobs:
     - run: npm ci
     - run: node_modules/eslint/bin/eslint.js  --ext .ts src
     - run: node_modules/eslint/bin/eslint.js  --ext .ts test
-    - run: node_modules/tslint/bin/tslint -p ./ -c src/tslint.json
+    - run: node_modules/tslint/bin/tslint -p ./ -c tslint.json
     - run: node_modules/typescript/bin/tsc -p ./
     - run: rm -r dist
