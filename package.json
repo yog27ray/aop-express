@@ -38,6 +38,6 @@
   "dependencies": {
     "inversify": "^5.0.5",
     "reflect-metadata": "^0.2.1",
-    "uuid": "^8.3.2"
+    "uuid": "^9.0.1"
   }
 }
